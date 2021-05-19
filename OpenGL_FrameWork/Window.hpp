@@ -43,9 +43,14 @@ namespace FrameWork
 
 
 		//ƒtƒŒ[ƒ€ŠÇ—
+		static double lasttime;
+		double nowtime = 0;
+		double deltatime = 0;
+		double limittime = 1.0 / 60;
+
 		int count = -1;
 		int startCount = 0;
-		int wait  = 0;
+		double wait  = 0;
 	};
 }
 #endif

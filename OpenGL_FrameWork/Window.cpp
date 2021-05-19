@@ -2,6 +2,7 @@
  #include <chrono>
  #include <thread>
 
+double FrameWork::Window::lasttime = 0;
 
 //コンストラクタ
 FrameWork::Window::Window(int width, int height, const char* title)
@@ -57,32 +58,17 @@ void FrameWork::Window::Resize(GLFWwindow* const win, int width, int height)
 void FrameWork::Window::FrameUpdate()
 {
 	
-	if (count == 60)
-	{
-		int t = ((int)(glfwGetTime() * 1000.0f)) - startCount;
-
-
-
-		//std::cout << "glfwGetTime(): " << (int)(glfwGetTime() * 1000.0f) << std::endl;
-		//std::cout << "startCount: " << startCount << std::endl;
-		//std::cout <<"t: "<< t << std::endl;
-
-		wait = t / 60;
-		//std::cout << wait << std::endl;
-		//startCount = 0;
-		count = 0;
-		//glfwSetTime(0);
+	if (count == 0) {
+		lasttime = glfwGetTime();
 	}
-
-
-
-	if (count == 0)
-	{
-		startCount = ((int)(glfwGetTime() * 1000.0f));
-		//std::cout << "startCount: " << startCount << std::endl;
-
-
+	else {
+		nowtime = glfwGetTime();
+		deltatime = nowtime - lasttime;
 	}
+	wait = (2 * limittime) - deltatime;
+	lasttime = nowtime;
+	count++;
+	return;
 
 
 	count++;
@@ -94,7 +80,11 @@ void FrameWork::Window::FrameUpdate()
 //待機
 void FrameWork::Window::Wait()
 {
-	//std::this_thread::sleep_for(std::chrono::milliseconds(wait)); // 3 ミリ秒
+	if ((int)(wait * 1000.0f) > 0)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds((int)(wait * 1000.0f))); // 3 ミリ秒
+		//std::cout << wait * 1000.0f << std::endl;
+	}
 
 }
 

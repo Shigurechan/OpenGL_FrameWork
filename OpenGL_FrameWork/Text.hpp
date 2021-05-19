@@ -19,7 +19,7 @@ namespace FrameWork
         Text(std::shared_ptr<Window> w, const char* vert = NULL, const char* frag = NULL);		//コンストラクタ
         ~Text();	                                                                            //デストラクタ
 
-        void Draw(glm::vec2 pos, const char16_t* text,float scale, glm::vec3 color);    //描画
+        void Draw(glm::vec2 pos, const char* text,float scale, glm::vec3 color);    //描画
 
 
     private:

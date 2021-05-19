@@ -2,11 +2,14 @@
 #include "glew/include/GL/glew.h"
 #include "glm/glm.hpp"
 
+#include "uchar.h"
 #include "Window.hpp"
 #include <iostream>
 
 FrameWork::Text::Text(std::shared_ptr<Window> w, const char* vert, const char* frag) : FrameWork::Transform_2D(),Shader()
 {
+   
+
     windowContext = w;  //ウインドウコンテキスト
 
     //シェーダー
@@ -61,7 +64,8 @@ FrameWork::Text::Text(std::shared_ptr<Window> w, const char* vert, const char* f
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void FrameWork::Text::Draw(glm::vec2 pos,const char16_t* text,float scale, glm::vec3 color)
+void FrameWork::Text::Draw(glm::vec2 pos, const char* text, float scale, glm::vec3 color)
+//void FrameWork::Text::Draw(glm::vec2 pos, std::string text,float scale, glm::vec3 color)
 {
     setEnable();    //シェーダーを有効にする
 
@@ -75,13 +79,24 @@ void FrameWork::Text::Draw(glm::vec2 pos,const char16_t* text,float scale, glm::
     setUniform3f("textColor",color);
     setUniformMatrix4fv("uViewProjection", glm::ortho(0.0f, windowContext->getSize().x, 0.0f, windowContext->getSize().y));
  
-    for (int i = 0; text[i] != '\0'; i++)
-    {
 
+   // char16_t txt[110000];
+    wchar_t txt[10000] = { '\0' };
+    //int f = mbtowc(txt, text, strlen(text));
+    int f = mbrtowc(txt, text, (size_t)strlen(text),nullptr);
+    size_t size;
+    //int f = mbsrtowcs_s(&size,txt,sizeof(text),&text,sizeof(text),nullptr);
+    
+    //std::cout << f << std::endl;
+    
+   
+    for (int i = 0; txt[i] != '\0'; i++)
+    {
+        std::cout << txt[i] <<std::endl;
         unsigned int texture = 0;
 
         // load character glyph 
-        FT_Load_Glyph(face, FT_Get_Char_Index(face, text[i]), FT_LOAD_RENDER);
+        FT_Load_Glyph(face, FT_Get_Char_Index(face, txt[i]), FT_LOAD_RENDER);
 
 
         // now store character for later use
