@@ -8,7 +8,8 @@
 
 FrameWork::Text::Text(std::shared_ptr<Window> w, const char* vert, const char* frag) : FrameWork::Transform_2D(),Shader()
 {
-   
+    setlocale(LC_CTYPE, "");
+
 
     windowContext = w;  //ウインドウコンテキスト
 
@@ -74,25 +75,27 @@ void FrameWork::Text::Draw(glm::vec2 pos, const char* text, float scale, glm::ve
     //テクスチャをアクティブ
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(vao);
-    
-    //Unform
-    setUniform3f("textColor",color);
-    setUniformMatrix4fv("uViewProjection", glm::ortho(0.0f, windowContext->getSize().x, 0.0f, windowContext->getSize().y));
- 
 
-   // char16_t txt[110000];
-    wchar_t txt[10000] = { '\0' };
-    //int f = mbtowc(txt, text, strlen(text));
-    int f = mbrtowc(txt, text, (size_t)strlen(text),nullptr);
-    size_t size;
-    //int f = mbsrtowcs_s(&size,txt,sizeof(text),&text,sizeof(text),nullptr);
-    
-    //std::cout << f << std::endl;
-    
-   
-    for (int i = 0; txt[i] != '\0'; i++)
+    //Unform
+    setUniform3f("textColor", color);
+    setUniformMatrix4fv("uViewProjection", glm::ortho(0.0f, windowContext->getSize().x, 0.0f, windowContext->getSize().y));
+
+    //char text[] = "テスト";
+    //wchar_t txt[strlen(text)] = { L'\0' };
+    wchar_t txt[100000] = { L'\0' };// = (wchar_t*)malloc(strlen(text));
+
+
+
+    int i, j, f;
+    for (i = 0, j = 0; text[j]; i++, j += f)
     {
-        std::cout << txt[i] <<std::endl;
+        f = mbrtowc(txt + i, &text[j], MB_CUR_MAX, nullptr);
+    }
+
+   
+    for (int i = 0; txt[i] != L'\0'; i++)
+    {
+        //std::cout << txt[i] <<std::endl;
         unsigned int texture = 0;
 
         // load character glyph 
@@ -163,6 +166,9 @@ void FrameWork::Text::Draw(glm::vec2 pos, const char* text, float scale, glm::ve
         pos.x += ((ch.Advance >> 6) * scale); // bitshift by 6 to get value in pixels (2^6 = 64)
     }
 
+
+
+    
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
     setDisable();   //シェーダーを無効にする
@@ -175,5 +181,5 @@ FrameWork::Text::~Text()
     //グリフ解放
     FT_Done_Face(face);
     FT_Done_FreeType(ft);
-
+   
 }
