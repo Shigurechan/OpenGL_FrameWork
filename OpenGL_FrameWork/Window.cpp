@@ -57,7 +57,7 @@ void FrameWork::Window::Resize(GLFWwindow* const win, int width, int height)
 //待機フレームを計算
 void FrameWork::Window::FrameUpdate()
 {
-	
+	//std::cout << "あああ" << std::endl;
 	if (count == 0) {
 		lasttime = glfwGetTime();
 	}
@@ -67,14 +67,23 @@ void FrameWork::Window::FrameUpdate()
 	}
 	wait = (2 * limittime) - deltatime;
 	lasttime = nowtime;
-	count++;
-	return;
-
+	
 
 	count++;
 
+	if (count == PROGRESS_FRAME_MAX)
+	{
+		count = 1;
+	}
 }
 
+
+//経過フレームを取得
+int FrameWork::Window::getProgressFrame()
+{
+	return count;
+
+}
 
 
 //待機

@@ -17,7 +17,10 @@
 #include "Circle.hpp"
 #include "Text.hpp"
 #include "RandomNumber.hpp"
+#include "Animation.hpp"
 
+
+#define PI ((float)3.14159265359f) //PI
 
 namespace FrameWork
 {

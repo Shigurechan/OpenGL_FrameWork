@@ -129,6 +129,11 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	//UVサイズからピクセルサイズを算出
 	const float sizeX = 1.0f / (float)textureID.at(texNum).size.x;
 	const float sizeY = 1.0f / (float)textureID.at(texNum).size.y;
+
+	std::cout << textureID.at(texNum).size.x << std::endl;
+	std::cout << textureID.at(texNum).size.y << std::endl;
+
+
 	//std::cout<< sizeX << std::endl;
 	//左上
 	rectangleVertex[0].uv[0] = sizeX * startSize.x;
@@ -158,10 +163,10 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	//std::cout << windowContext->getSize().x << std::endl;
 
 	//Transform
-	setSizeScale(glm::vec2((endSize.x - startSize.x), (endSize.y - startSize.y)));			//サイズ	
-	setScale(s);																			//スケール
-	setRotate(r);																			//回転
-	setTranslate(glm::vec3(pos.x + (getSizeScale().x / 2.0f), pos.y + (getSizeScale().y / 2.0f), 0.0f));	//平行移動
+	setSizeScale(glm::vec2(std::abs((endSize.x - startSize.x)), (std::abs(endSize.y - startSize.y))));			//サイズ	
+	setScale(s);																								//スケール
+	setRotate(r);																								//回転
+	setTranslate(glm::vec3(pos.x + (getSizeScale().x / 2.0f), pos.y + (getSizeScale().y / 2.0f), 0.0f));		//平行移動
 
 
 

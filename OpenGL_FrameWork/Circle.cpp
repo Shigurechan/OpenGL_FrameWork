@@ -1,6 +1,6 @@
 #include "Circle.hpp"
 #include "Window.hpp"
-
+#include "FrameWork.hpp"
 //コンストラクタ
 FrameWork::Circle::Circle(std::shared_ptr<Window> w,const char* vert, const char* frag) : Transform_2D(),Shader()
 {

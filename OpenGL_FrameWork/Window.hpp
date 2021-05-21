@@ -6,7 +6,7 @@
 #include <glfw/include/GLFW/glfw3.h>
 #include "glm/glm.hpp"
 
-#define PI ((float)3.14159265359f) //PI
+#define PROGRESS_FRAME_MAX 6000		//最大経過フレーム
 
 namespace FrameWork
 {
@@ -22,9 +22,9 @@ namespace FrameWork
 		const int getKeyInput(int input);	//キー入力
 
 		//フレーム管理
-		void FrameUpdate();	//待機フレームを計算
-		void Wait();		//待機
-
+		void FrameUpdate();		//待機フレームを計算
+		void Wait();			//待機
+		int getProgressFrame();	//経過フレームを取得
 
 
 

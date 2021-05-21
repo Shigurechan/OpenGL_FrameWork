@@ -89,7 +89,7 @@ void FrameWork::Text::Draw(glm::vec2 pos, const char* text, float scale, glm::ve
     int i, j, f;
     for (i = 0, j = 0; text[j]; i++, j += f)
     {
-        f = mbrtowc(txt + i, &text[j], MB_CUR_MAX, nullptr);
+        f = (int)mbrtowc(txt + i, &text[j], (size_t)MB_CUR_MAX, nullptr);
     }
 
    
@@ -161,11 +161,12 @@ void FrameWork::Text::Draw(glm::vec2 pos, const char* text, float scale, glm::ve
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
 
-
+        glDeleteTextures(1,&ch.textureID);
         // now advance cursors for next glyph (note that advance is number of 1/64 pixels)
         pos.x += ((ch.Advance >> 6) * scale); // bitshift by 6 to get value in pixels (2^6 = 64)
-    }
 
+    }
+    
 
 
     
@@ -181,5 +182,7 @@ FrameWork::Text::~Text()
     //ƒOƒŠƒt‰ð•ú
     FT_Done_Face(face);
     FT_Done_FreeType(ft);
-   
+
+    glDeleteVertexArrays(1, &vao);
+    glDeleteBuffers(1, &vbo);
 }
