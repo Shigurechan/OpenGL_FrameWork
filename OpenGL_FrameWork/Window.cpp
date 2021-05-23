@@ -92,7 +92,7 @@ void FrameWork::Window::Wait()
 	if ((int)(wait * 1000.0f) > 0)
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds((int)(wait * 1000.0f))); // 3 ミリ秒
-		//std::cout << wait * 1000.0f << std::endl;
+		std::cout << wait * 1000.0f << std::endl;
 	}
 
 }
@@ -137,17 +137,19 @@ FrameWork::Window::operator bool()
 	glfwPollEvents();	//イベントを取り出す
 
 
-#define DEBUG 1
-#ifndef DEBUG
+
+#ifndef true
+
 	//エラー処理
 	GLenum err;
 	while ((err = glGetError()) != GL_NO_ERROR)
-	{	
-		std::cout <<"glGetError(): 0x"<< std::hex << err << std::endl;
+	{
+		std::cout << "glGetError(): 0x" << std::hex << err << std::endl;
 	}
+
 #endif;
 
-
+	
 	//ESCキーで終了
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == 1)
 	{

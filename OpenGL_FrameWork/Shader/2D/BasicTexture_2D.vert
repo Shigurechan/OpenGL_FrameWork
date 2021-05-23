@@ -28,7 +28,7 @@ void main()
 {
 	vec4 vertex = vec4(vertexPosition,0.0,1.0);		//頂点座標
 	mat4 model = uTranslate * uRotate * uScale;		//モデル行列
-	gl_Position =  (uViewProjection * model) * vertex;
+	gl_Position = (uViewProjection * model) * vertex;
 	
 	
 

@@ -175,6 +175,16 @@
     <ClCompile Include="Transform_2D.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\2D\BasicMono_2D.frag" />
+    <None Include="Shader\2D\BasicMono_2D.vert" />
+    <None Include="Shader\2D\BasicMono_VertColor_2D.frag" />
+    <None Include="Shader\2D\BasicMono_VertColor_2D.vert" />
+    <None Include="Shader\2D\BasicTexture_2D.frag" />
+    <None Include="Shader\2D\BasicTexture_2D.vert" />
+    <None Include="Shader\2D\BasicText_2D.frag" />
+    <None Include="Shader\2D\BasicText_2D.vert" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

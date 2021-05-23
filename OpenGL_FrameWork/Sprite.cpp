@@ -37,7 +37,9 @@ FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char*
 
 	}
 
-	
+
+
+
 
 	//テクスチャ関係	
 	textureID = std::vector<TextureData>(0);		//テクスチャーデータ
@@ -59,6 +61,7 @@ FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char*
 	glVertexAttribPointer(attrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
 	setBindAttribVertex("vertexPosition");
 
+	//UV
 	attrib = getAttribLocation("vertexUV");
 	glEnableVertexAttribArray(attrib);
 	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(VertexUV), rectangleVertex, GL_STATIC_DRAW);
@@ -95,9 +98,6 @@ void FrameWork::Sprite::setTexture(TextureData tex)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	//setSizeScale(glm::vec3(textureID.back().size.x, textureID.back().size.y, 1.0f));	//スプライトサイズを設定
-
-
 	textureID.back().textureUnitNumber = GL_TEXTURE0 + (unsigned short int)textureUnitCount;
 	assert(textureID.back().textureUnitNumber < GL_TEXTURE31);//エラー表示
 
@@ -126,12 +126,13 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 
 	// ####################### 頂点属性のUVデータを更新  #######################
 	
+	
 	//UVサイズからピクセルサイズを算出
 	const float sizeX = 1.0f / (float)textureID.at(texNum).size.x;
 	const float sizeY = 1.0f / (float)textureID.at(texNum).size.y;
 
-	std::cout << textureID.at(texNum).size.x << std::endl;
-	std::cout << textureID.at(texNum).size.y << std::endl;
+	//std::cout << textureID.at(texNum).size.x << std::endl;
+	//std::cout << textureID.at(texNum).size.y << std::endl;
 
 
 	//std::cout<< sizeX << std::endl;
@@ -154,10 +155,13 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	//右下
 	rectangleVertex[5].uv[0] = sizeX * endSize.x;
 	rectangleVertex[5].uv[1] = 1.0f - (sizeY * ((endSize.y - startSize.y) + startSize.y));
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Transform_2D::VertexUV) * 6, rectangleVertex);	//頂点データを再変更	
 
+
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(VertexUV) * 6, rectangleVertex);
+	
 	
 	//  ################################################### 
+	
 
 
 	//std::cout << windowContext->getSize().x << std::endl;
@@ -167,7 +171,7 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	setScale(s);																								//スケール
 	setRotate(r);																								//回転
 	setTranslate(glm::vec3(pos.x + (getSizeScale().x / 2.0f), pos.y + (getSizeScale().y / 2.0f), 0.0f));		//平行移動
-
+	
 
 
 	//uniform
