@@ -10,7 +10,7 @@ FrameWork::Window::Window(int width, int height, const char* title)
 	:window(glfwCreateWindow(width, height, title, NULL, NULL))	
 {
 	std::fill(std::begin(keyBoard), std::end(keyBoard), 0);
-
+	
 
 	if (window == NULL)
 	{
@@ -34,7 +34,9 @@ FrameWork::Window::Window(int width, int height, const char* title)
 	//イベント処理
 	glfwSetWindowUserPointer(window, this);		//このインスタンスのthis
 	glfwSetWindowSizeCallback(window, Resize);	//ウインドウサイズを変更する時に呼び出す処理
-	Resize(window, width, height);	//リサイズ
+	glfwSetDropCallback(window,DragAndDrop);	//ドラック＆ドロップ
+
+	Resize(window, width, height);				//リサイズ
 
 }
 
@@ -52,7 +54,36 @@ void FrameWork::Window::Resize(GLFWwindow* const win, int width, int height)
 		instance->size.x = (GLfloat)width;
 		instance->size.y = (GLfloat)height;		
 	}
+
 }
+
+//ドラック＆ドロップしたパスを取得
+const std::string FrameWork::Window::getDropPath()const
+{
+	return drop;
+}
+
+
+
+
+//ドラック＆ドロップ
+void FrameWork::Window::DragAndDrop(GLFWwindow* const win,int num, const char* str[])
+{
+
+	Window* const instance = (Window*)glfwGetWindowUserPointer(win);
+
+	if (instance != NULL)
+	{
+		//std::cout << str[0] << std::endl;
+		instance->drop = std::string(str[0]);
+		
+		
+	}
+
+}
+
+
+
 
 
 //待機フレームを計算

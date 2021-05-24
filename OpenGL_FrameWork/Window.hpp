@@ -22,16 +22,18 @@ namespace FrameWork
 		const int getKeyInput(int input);	//キー入力
 
 		//フレーム管理
-		void FrameUpdate();		//待機フレームを計算
-		void Wait();			//待機
-		int getFrame();	//フレームを取得
+		void FrameUpdate();	//待機フレームを計算
+		void Wait();		//待機
+		int getFrame();		//フレームを取得
+
+		const glm::vec2 getSize() const;														//サイズを取得
+		const std::string getDropPath()const;													//ドラック＆ドロップしたパスを取得
 
 
 
 		//イベント処理
-		static void Resize(GLFWwindow* const win, int width, int height);						//サイズ変更
-
-		const glm::vec2 getSize() const;		//サイズを取得
+		static void Resize(GLFWwindow* const win, int width, int height);					//サイズ変更
+		static void DragAndDrop(GLFWwindow* const win,int num,const char* str[]);			//ドラック＆ドロップ
 
 	private:
 
@@ -51,7 +53,9 @@ namespace FrameWork
 		int count = 0;
 		int startCount = 0;
 		double wait  = 0;
+
+
+		std::string drop;	//ドラック＆ドロップしたパス
 	};
 }
 #endif
-

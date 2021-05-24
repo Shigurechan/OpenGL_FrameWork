@@ -50,7 +50,7 @@ FrameWork::Text::Text(std::shared_ptr<Window> w, const char* vert, const char* f
 
     if (FT_New_Face(ft, "C:\\Windows\\Fonts\\meiryo.ttc", 0, &face) != 0)
     {
-        std::cout<<"ERROR: FREETYPE: Failed to load font" << std::endl;
+        std::cout << "ERROR: FREETYPE: Failed to load font" << std::endl;
         assert(0);
 
     }
