@@ -31,6 +31,10 @@ void FrameWork::Transform_2D::setRotate(float a)
 //•½sˆÚ“®
 void FrameWork::Transform_2D::setTranslate(glm::vec3 t)
 {	
+	//printf("X: %f\n", t.x);
+	//printf("Y: %f\n",t.y);
+
+
 	translate = glm::translate(glm::mat4(1), t);
 }
 

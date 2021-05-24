@@ -6,7 +6,7 @@
 #include <glfw/include/GLFW/glfw3.h>
 #include "glm/glm.hpp"
 
-#define PROGRESS_FRAME_MAX 6000		//最大経過フレーム
+#define FRAME_RATE 60
 
 namespace FrameWork
 {
@@ -24,7 +24,7 @@ namespace FrameWork
 		//フレーム管理
 		void FrameUpdate();		//待機フレームを計算
 		void Wait();			//待機
-		int getProgressFrame();	//経過フレームを取得
+		int getFrame();	//フレームを取得
 
 
 
@@ -37,7 +37,7 @@ namespace FrameWork
 
 		GLFWwindow* const window;	//ウインドウコンテキスト
 		glm::vec2 size;				//ウインドサイズ
-		char keyBoard[256];			//キー入力
+		char keyBoard[500];			//キー入力
 
 
 
@@ -48,7 +48,7 @@ namespace FrameWork
 		double deltatime = 0;
 		double limittime = 1.0 / 60;
 
-		int count = -1;
+		int count = 0;
 		int startCount = 0;
 		double wait  = 0;
 	};

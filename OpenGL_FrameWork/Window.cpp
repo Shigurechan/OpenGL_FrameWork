@@ -4,6 +4,7 @@
 
 double FrameWork::Window::lasttime = 0;
 
+
 //コンストラクタ
 FrameWork::Window::Window(int width, int height, const char* title)
 	:window(glfwCreateWindow(width, height, title, NULL, NULL))	
@@ -18,7 +19,7 @@ FrameWork::Window::Window(int width, int height, const char* title)
 	}
 
 	glfwMakeContextCurrent(window);	//コンテキストを作成
-
+	glfwSwapInterval(1);
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK)
 	{
@@ -57,29 +58,32 @@ void FrameWork::Window::Resize(GLFWwindow* const win, int width, int height)
 //待機フレームを計算
 void FrameWork::Window::FrameUpdate()
 {
-	//std::cout << "あああ" << std::endl;
-	if (count == 0) {
-		lasttime = glfwGetTime();
+
+	if (count == FRAME_RATE)
+	{
+		int t = (int)(1000 - ((glfwGetTime() * 1000.0) - startCount));
+		wait += t / FRAME_RATE;
+		count = 0;
 	}
-	else {
-		nowtime = glfwGetTime();
-		deltatime = nowtime - lasttime;
+
+
+
+	if (count == 0)
+	{
+		startCount = ((int)(glfwGetTime() * 1000.0f));
+		//std::cout << "startCount: " << startCount << std::endl;
+
+
 	}
-	wait = (2 * limittime) - deltatime;
-	lasttime = nowtime;
-	
+
 
 	count++;
 
-	if (count == PROGRESS_FRAME_MAX)
-	{
-		count = 1;
-	}
 }
 
 
-//経過フレームを取得
-int FrameWork::Window::getProgressFrame()
+//フレームを取得
+int FrameWork::Window::getFrame()
 {
 	return count;
 
@@ -92,7 +96,7 @@ void FrameWork::Window::Wait()
 	if ((int)(wait * 1000.0f) > 0)
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds((int)(wait * 1000.0f))); // 3 ミリ秒
-		std::cout << wait * 1000.0f << std::endl;
+		//std::cout << wait * 1000.0f << std::endl;
 	}
 
 }
@@ -114,20 +118,24 @@ const int FrameWork::Window::getKeyInput(int input)
 {
 	int key = glfwGetKey(window, input);
 
-	if ( key == GLFW_PRESS)
+	//printf("input: %d\n",input);
+
+	if (key == GLFW_PRESS)
 	{
-		keyBoard[key] += 1;
-		if (keyBoard[key] > 1)
+		keyBoard[input]++;
+		if (keyBoard[input] > 1)
 		{
-			keyBoard[key] = 2;
-		} 
+			keyBoard[input] = 2;
+		}	
 	}
 	else if (key == GLFW_RELEASE)
 	{
-		keyBoard[key] = 0;
+	
+		keyBoard[input] = 0;
+
 	}
 
-	return keyBoard[key];
+	return keyBoard[input];
 }
 
 
@@ -137,8 +145,8 @@ FrameWork::Window::operator bool()
 	glfwPollEvents();	//イベントを取り出す
 
 
-
-#ifndef true
+//#define DEBUG 
+#ifndef DEBUG
 
 	//エラー処理
 	GLenum err;
@@ -147,7 +155,8 @@ FrameWork::Window::operator bool()
 		std::cout << "glGetError(): 0x" << std::hex << err << std::endl;
 	}
 
-#endif;
+
+#endif
 
 	
 	//ESCキーで終了

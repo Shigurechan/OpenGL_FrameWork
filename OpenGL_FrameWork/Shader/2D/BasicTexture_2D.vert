@@ -14,7 +14,7 @@ layout(location = 1) in vec2 vertexUV;			//UV座標
 // ###################### 出力 ###################### 
 layout(location = 2) out vec2 vUV; //UV
 
-// ###################### Unifrom ###################### 
+// ###################### Uniform ###################### 
 uniform mat4 uScale;		//スケール
 uniform mat4 uRotate;		//回転
 uniform mat4 uTranslate;	//平行移動

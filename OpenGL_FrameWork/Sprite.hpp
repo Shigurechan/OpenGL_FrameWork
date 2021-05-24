@@ -44,6 +44,8 @@ namespace FrameWork
 		};
 
 
+
+
 		void setDrawTextureID(unsigned char id);	//描画するテクスチャ番号を指定
 
 		std::vector<TextureData> textureID;	//テクスチャーID

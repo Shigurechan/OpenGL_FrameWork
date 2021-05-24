@@ -71,10 +71,12 @@ void FrameWork::Text::Draw(glm::vec2 pos, const char* text, float scale, glm::ve
     setEnable();    //シェーダーを有効にする
 
     pos.y = windowContext->getSize().y - pos.y - charSize;
-
+    const float c = 1.0f / 255;
+    color = color * c;
     //テクスチャをアクティブ
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(vao);
+
 
     //Unform
     setUniform3f("textColor", color);
@@ -82,7 +84,7 @@ void FrameWork::Text::Draw(glm::vec2 pos, const char* text, float scale, glm::ve
 
     //char text[] = "テスト";
     //wchar_t txt[strlen(text)] = { L'\0' };
-    wchar_t txt[100000] = { L'\0' };// = (wchar_t*)malloc(strlen(text));
+    wchar_t txt[1000] = { L'\0' };// = (wchar_t*)malloc(strlen(text));
 
 
 

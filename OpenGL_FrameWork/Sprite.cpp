@@ -20,7 +20,6 @@ FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char*
 
 
 	//シェーダー読み込み
-
 	if (vert == NULL && frag == NULL)
 	{
 		vert = "Shader/2D/BasicTexture_2D.vert";
@@ -42,7 +41,7 @@ FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char*
 
 
 	//テクスチャ関係	
-	textureID = std::vector<TextureData>(0);		//テクスチャーデータ
+	textureID = std::vector<TextureData>(0);	//テクスチャーデータ
 	textureUnitCount = 0;						//テクスチャユニット数をカウント
 
 	
@@ -57,14 +56,14 @@ FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char*
 	//頂点	
 	GLint attrib = getAttribLocation("vertexPosition");
 	glEnableVertexAttribArray(attrib);
-	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(VertexUV), rectangleVertex, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(VertexUV), rectangleVertex, GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(attrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
 	setBindAttribVertex("vertexPosition");
 
 	//UV
 	attrib = getAttribLocation("vertexUV");
 	glEnableVertexAttribArray(attrib);
-	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(VertexUV), rectangleVertex, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(VertexUV), rectangleVertex, GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(attrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)(sizeof(GLfloat) * 2));
 	setBindAttribVertex("vertexUV");
 
@@ -120,6 +119,7 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	}
 
 	glBindVertexArray(vao);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
 
 	setDrawTextureID((unsigned char)texNum);	//テクチャーユニットを設定
@@ -130,7 +130,7 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	//UVサイズからピクセルサイズを算出
 	const float sizeX = 1.0f / (float)textureID.at(texNum).size.x;
 	const float sizeY = 1.0f / (float)textureID.at(texNum).size.y;
-
+//	std::cout << sizeX << std::endl;
 	//std::cout << textureID.at(texNum).size.x << std::endl;
 	//std::cout << textureID.at(texNum).size.y << std::endl;
 
@@ -157,6 +157,12 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	rectangleVertex[5].uv[1] = 1.0f - (sizeY * ((endSize.y - startSize.y) + startSize.y));
 
 
+	//std::cout << rectangleVertex[2].uv[0] << std::endl;
+	//std::cout<< rectangleVertex[1].uv[0] <<std::endl;
+	//printf("%f\n", rectangleVertex[2].uv[0]);
+	//printf("%f\n", rectangleVertex[1].uv[0]);
+
+
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(VertexUV) * 6, rectangleVertex);
 	
 	
@@ -167,6 +173,7 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	//std::cout << windowContext->getSize().x << std::endl;
 
 	//Transform
+	//printf("%f\n", rectangleVertex[2].uv[0]);
 	setSizeScale(glm::vec2(std::abs((endSize.x - startSize.x)), (std::abs(endSize.y - startSize.y))));			//サイズ	
 	setScale(s);																								//スケール
 	setRotate(r);																								//回転
@@ -191,6 +198,7 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	//バインドを解除
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
+
 	if (isDefaultShader == true)
 	{
 		setDisable();
