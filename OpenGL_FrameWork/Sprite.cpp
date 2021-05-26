@@ -36,14 +36,9 @@ FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char*
 
 	}
 
-
-
-
-
 	//テクスチャ関係	
 	textureID = std::vector<TextureData>(0);	//テクスチャーデータ
 	textureUnitCount = 0;						//テクスチャユニット数をカウント
-
 	
 	//vao
 	glGenVertexArrays(1, &vao);
@@ -126,8 +121,7 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	setDrawTextureID((unsigned char)texNum);	//テクチャーユニットを設定
 
 	// ####################### 頂点属性のUVデータを更新  #######################
-	
-	
+	// 	
 	//UVサイズからピクセルサイズを算出
 	const float sizeX = 1.0f / (float)textureID.at(texNum).size.x;
 	const float sizeY = 1.0f / (float)textureID.at(texNum).size.y;
@@ -164,13 +158,11 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	//printf("%f\n", rectangleVertex[1].uv[0]);
 
 
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(VertexUV) * 6, rectangleVertex);
-	
-	
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(VertexUV) * 6, rectangleVertex);	
 	//  ################################################### 
+
+
 	
-
-
 	//std::cout << windowContext->getSize().x << std::endl;
 
 	//Transform
@@ -180,8 +172,6 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	setRotate(r);																								//回転
 	setTranslate(glm::vec3(pos.x + (getSizeScale().x / 2.0f), pos.y + (getSizeScale().y / 2.0f), 0.0f));		//平行移動
 	
-
-
 	//uniform
 	setUniformMatrix4fv("uTranslate", translate);
 	setUniformMatrix4fv("uRotate", rotate);
