@@ -83,7 +83,9 @@ void FrameWork::Line::Draw(glm::vec2 start, glm::vec2 end, glm::vec4 color)
 
 
 	
+
 	glBindVertexArray(vao);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
 
 	if (isDefaultShader == true)
@@ -115,8 +117,9 @@ void FrameWork::Line::Draw(glm::vec2 start, glm::vec2 end, glm::vec4 color)
 	setUniformMatrix4fv("uViewProjection", glm::ortho(0.0f, windowContext->getSize().x, windowContext->getSize().y, 0.0f, -1.0f, 1.0f));
 
 	glDrawArrays(GL_LINES, 0, 2);
-	glBindVertexArray(0);
 
+
+	glBindVertexArray(0);
 
 	if (isDefaultShader == true)
 	{
@@ -129,10 +132,16 @@ void FrameWork::Line::Draw(glm::vec2 start, glm::vec2 end, glm::vec4 color)
 //頂点カラー描画
 void FrameWork::Line::DrawColor(glm::vec2 start, glm::vec2 end,glm::vec4 startColor, glm::vec4 endColor)
 {
+	glBindVertexArray(vao);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+
 	if (isDefaultShader == true)
 	{
 		setEnable();
 	}
+
+
 
 	//頂点属性の　色と頂点座標を設定
 	float c = 1.0f / 255.0f;
@@ -185,9 +194,17 @@ void FrameWork::Line::DrawColor(glm::vec2 start, glm::vec2 end,glm::vec4 startCo
 	setUniformMatrix4fv("uViewProjection", glm::ortho(0.0f, windowContext->getSize().x, windowContext->getSize().y, 0.0f, -1.0f, 1.0f));
 
 	glDrawArrays(GL_LINES, 0, 2);
+
+
+
+
+	//バインドを解除
 	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
+
+	
 	if (isDefaultShader == true)
 	{
 		setDisable();

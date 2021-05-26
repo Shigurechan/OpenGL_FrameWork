@@ -35,6 +35,7 @@ FrameWork::Window::Window(int width, int height, const char* title)
 	glfwSetWindowUserPointer(window, this);		//このインスタンスのthis
 	glfwSetWindowSizeCallback(window, Resize);	//ウインドウサイズを変更する時に呼び出す処理
 	glfwSetDropCallback(window,DragAndDrop);	//ドラック＆ドロップ
+	glfwSetScrollCallback(window,MouseScroll);	//マウスのホイール
 
 	Resize(window, width, height);				//リサイズ
 
@@ -56,6 +57,32 @@ void FrameWork::Window::Resize(GLFWwindow* const win, int width, int height)
 	}
 
 }
+
+//マウススクロール
+void FrameWork::Window::MouseScroll(GLFWwindow* win,double x, double y)
+{
+
+	Window* const instance = (Window*)glfwGetWindowUserPointer(win);
+
+	if (instance != NULL)
+	{
+
+		instance->mouseWheel = y;
+	}
+
+
+
+//	mouseWheel = y;
+	
+}
+
+//マウススクロールを取得
+double FrameWork::Window::getMouseScroll()
+{
+	return mouseWheel;
+}
+
+
 
 //ドラック＆ドロップしたパスを取得
 const std::string FrameWork::Window::getDropPath()const
@@ -167,9 +194,9 @@ const int FrameWork::Window::getKeyInput(int input)
 	if (key == GLFW_PRESS)
 	{
 		keyBoard[input]++;
-		if (keyBoard[input] > 1)
+		if (keyBoard[input] > 6000)
 		{
-			keyBoard[input] = 2;
+			keyBoard[input] = 6000;
 		}	
 	}
 	else if (key == GLFW_RELEASE)
