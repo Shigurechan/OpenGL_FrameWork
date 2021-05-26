@@ -36,6 +36,7 @@ FrameWork::Window::Window(int width, int height, const char* title)
 	glfwSetWindowSizeCallback(window, Resize);	//ウインドウサイズを変更する時に呼び出す処理
 	glfwSetDropCallback(window,DragAndDrop);	//ドラック＆ドロップ
 	glfwSetScrollCallback(window,MouseScroll);	//マウスのホイール
+	glfwSetCharCallback(window,KeyInputString);		//キー入力(文字入力)
 
 	Resize(window, width, height);				//リサイズ
 
@@ -75,6 +76,31 @@ void FrameWork::Window::MouseScroll(GLFWwindow* win,double x, double y)
 //	mouseWheel = y;
 	
 }
+
+//キー入力(文字入力)
+void FrameWork::Window::KeyInputString(GLFWwindow* win, unsigned int n)
+{
+
+	Window* const instance = (Window*)glfwGetWindowUserPointer(win);
+
+	if (instance != NULL)
+	{
+
+		instance->inputKey = n;
+	}
+
+}
+
+//キー入力(文字入力)
+unsigned int FrameWork::Window::InputKeyBoard()
+{
+	return inputKey;
+}
+
+
+
+
+
 
 //マウススクロールを取得
 double FrameWork::Window::getMouseScroll()

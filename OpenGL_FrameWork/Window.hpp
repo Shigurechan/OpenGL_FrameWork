@@ -30,14 +30,15 @@ namespace FrameWork
 		const std::string getDropPath()const;	//ドラック＆ドロップしたパスを取得
 		glm::vec2 getMousePos();				//マウス座標を取得
 		bool getMouseButton(int mouse);			//マウスボタンが押されたかどうか？
-		double getMouseScroll();					//マウススクロールを取得
+		double getMouseScroll();				//マウススクロールを取得
+		unsigned int InputKeyBoard();			//キー入力(文字入力)
 
 
 		//イベント処理
 		static void Resize(GLFWwindow* const win, int width, int height);			//サイズ変更
 		static void DragAndDrop(GLFWwindow* const win, int num, const char* str[]);	//ドラック＆ドロップ
-		static void MouseScroll(GLFWwindow* win,double x, double y);						//マウススクロール
-
+		static void MouseScroll(GLFWwindow* win,double x, double y);				//マウススクロール
+		static void KeyInputString(GLFWwindow* win,unsigned int n);					//キー入力(文字入力)
 	private:
 
 		GLFWwindow* const window;	//ウインドウコンテキスト
@@ -46,7 +47,7 @@ namespace FrameWork
 
 
 		double mouseWheel = 0;	//マウスホイール
-
+		unsigned int inputKey = 0;	//文字入力
 
 
 		//フレーム管理
