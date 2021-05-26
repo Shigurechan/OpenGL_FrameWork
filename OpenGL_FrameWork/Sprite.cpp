@@ -3,14 +3,14 @@
 #include <iostream>
 #include <fstream>
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_Transform.hpp>
-#include <glm/gtx/Transform.hpp>
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_Transform.hpp"
+#include "glm/gtx/Transform.hpp"
 
 #include "Texture.hpp"
 #include "Shader.hpp"
 #include "Window.hpp"
-#include <stb/stb_image.h>
+#include "stb/stb_image.h"
 
 
 //コンストラクタ
@@ -56,6 +56,7 @@ FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char*
 	//頂点	
 	GLint attrib = getAttribLocation("vertexPosition");
 	glEnableVertexAttribArray(attrib);
+	//glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(VertexUV), rectangleVertex, GL_STATIC_DRAW);
 	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(VertexUV), rectangleVertex, GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(attrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
 	setBindAttribVertex("vertexPosition");
@@ -63,6 +64,7 @@ FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char*
 	//UV
 	attrib = getAttribLocation("vertexUV");
 	glEnableVertexAttribArray(attrib);
+	//glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(VertexUV), rectangleVertex, GL_STATIC_DRAW);
 	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(VertexUV), rectangleVertex, GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(attrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)(sizeof(GLfloat) * 2));
 	setBindAttribVertex("vertexUV");
@@ -120,8 +122,7 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-
+	
 	setDrawTextureID((unsigned char)texNum);	//テクチャーユニットを設定
 
 	// ####################### 頂点属性のUVデータを更新  #######################

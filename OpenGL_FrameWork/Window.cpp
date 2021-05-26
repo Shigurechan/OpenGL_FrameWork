@@ -75,14 +75,27 @@ void FrameWork::Window::DragAndDrop(GLFWwindow* const win,int num, const char* s
 	if (instance != NULL)
 	{
 		//std::cout << str[0] << std::endl;
-		instance->drop = std::string(str[0]);
-		
-		
+		instance->drop = std::string(str[0]);		
 	}
-
 }
 
+//マウス座標を取得
+glm::vec2 FrameWork::Window::getMousePos()
+{
+	double x;
+	double y;
+	glfwGetCursorPos(window,&x,&y);
 
+	glm::vec2 pos((float)x, (float)y);
+
+	return pos;
+}
+
+//マウスボタンが押されたかどうか？
+bool FrameWork::Window::getMouseButton(int mouse )
+{
+	return glfwGetMouseButton(window,mouse);
+}
 
 
 

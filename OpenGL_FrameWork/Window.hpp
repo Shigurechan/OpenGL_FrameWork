@@ -26,8 +26,10 @@ namespace FrameWork
 		void Wait();		//待機
 		int getFrame();		//フレームを取得
 
-		const glm::vec2 getSize() const;														//サイズを取得
-		const std::string getDropPath()const;													//ドラック＆ドロップしたパスを取得
+		const glm::vec2 getSize() const;		//サイズを取得
+		const std::string getDropPath()const;	//ドラック＆ドロップしたパスを取得
+		glm::vec2 getMousePos();				//マウス座標を取得
+		bool getMouseButton(int mouse);			//マウスボタンが押されたかどうか？
 
 
 
