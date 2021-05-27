@@ -125,37 +125,31 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	//UVサイズからピクセルサイズを算出
 	const float sizeX = 1.0f / (float)textureID.at(texNum).size.x;
 	const float sizeY = 1.0f / (float)textureID.at(texNum).size.y;
-//	std::cout << sizeX << std::endl;
-	//std::cout << textureID.at(texNum).size.x << std::endl;
-	//std::cout << textureID.at(texNum).size.y << std::endl;
 
-	//std::cout << GL_BUFFER_SIZE << std::endl;
-	//std::cout<< sizeX << std::endl;
+
+
+
+
 	//左上
 	rectangleVertex[0].uv[0] = sizeX * startSize.x;
-	rectangleVertex[0].uv[1] = 1.0f - (sizeY * startSize.y) * -1;
+	rectangleVertex[0].uv[1] = 1.0f - (sizeY * startSize.y);
 
 	//左下
 	rectangleVertex[1].uv[0] = sizeX * startSize.x;
-	rectangleVertex[1].uv[1] = 1.0f - (sizeY * ((endSize.y - startSize.y) + startSize.y)) * -1;
+	rectangleVertex[1].uv[1] = 1.0f - (sizeY * endSize.y);
 	rectangleVertex[4].uv[0] = sizeX * startSize.x;
-	rectangleVertex[4].uv[1] = 1.0f - (sizeY * ((endSize.y - startSize.y) + startSize.y)) * -1;
+	rectangleVertex[4].uv[1] = 1.0f - (sizeY * endSize.y);
 
 	//右上
 	rectangleVertex[2].uv[0] = (sizeX * endSize.x);
-	rectangleVertex[2].uv[1] = 1.0f - (sizeY * startSize.y) * -1;
+	rectangleVertex[2].uv[1] = 1.0f - (sizeY * startSize.y);
 	rectangleVertex[3].uv[0] = (sizeX * endSize.x);
-	rectangleVertex[3].uv[1] = 1.0f - (sizeY * startSize.y) * -1;
+	rectangleVertex[3].uv[1] = 1.0f - (sizeY * startSize.y);
 
 	//右下
 	rectangleVertex[5].uv[0] = sizeX * endSize.x;
-	rectangleVertex[5].uv[1] = 1.0f - (sizeY * ((endSize.y - startSize.y) + startSize.y)) * -1;
+	rectangleVertex[5].uv[1] = 1.0f - (sizeY * endSize.y);
 
-
-	//std::cout << rectangleVertex[2].uv[0] << std::endl;
-	//std::cout<< rectangleVertex[1].uv[0] <<std::endl;
-	//printf("%f\n", rectangleVertex[2].uv[0]);
-	//printf("%f\n", rectangleVertex[1].uv[0]);
 
 
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(VertexUV) * 6, rectangleVertex);
