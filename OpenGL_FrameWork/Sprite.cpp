@@ -129,7 +129,7 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 
 
 
-
+	/*
 	//¶ã
 	rectangleVertex[0].uv[0] = sizeX * startSize.x;
 	rectangleVertex[0].uv[1] = 1.0f - (sizeY * startSize.y);
@@ -149,6 +149,33 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	//‰E‰º
 	rectangleVertex[5].uv[0] = sizeX * endSize.x;
 	rectangleVertex[5].uv[1] = 1.0f - (sizeY * endSize.y);
+	*/
+
+
+	//¶ã
+	rectangleVertex[0].uv[0] = sizeX * startSize.x;
+	rectangleVertex[0].uv[1] = sizeY * endSize.y;
+
+	//¶‰º
+	rectangleVertex[1].uv[0] = sizeX * startSize.x;
+	rectangleVertex[1].uv[1] = sizeY * startSize.y;
+	rectangleVertex[4].uv[0] = sizeX * startSize.x;
+	rectangleVertex[4].uv[1] = sizeY * startSize.y;
+
+	//‰Eã
+	rectangleVertex[2].uv[0] = sizeX * endSize.x;
+	rectangleVertex[2].uv[1] = sizeY * endSize.y;
+	rectangleVertex[3].uv[0] = sizeX * endSize.x;
+	rectangleVertex[3].uv[1] = sizeY * endSize.y;
+
+	//‰E‰º
+	rectangleVertex[5].uv[0] = sizeX * endSize.x;
+	rectangleVertex[5].uv[1] = sizeY * startSize.y;
+
+
+
+
+
 
 
 
@@ -171,6 +198,7 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	setUniformMatrix4fv("uRotate", rotate);
 	setUniformMatrix4fv("uScale", scale);
 	setUniformMatrix4fv("uViewProjection", glm::ortho(0.0f, windowContext->getSize().x, windowContext->getSize().y, 0.0f, -1.0f, 1.0f));
+
 	
 
 
