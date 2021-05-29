@@ -94,7 +94,7 @@ void FrameWork::Sprite::setTexture(TextureData tex)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	textureID.back().textureUnitNumber = GL_TEXTURE0 + (unsigned short int)textureUnitCount;
+	textureID.back().textureUnitNumber = GL_TEXTURE0 + (int)textureUnitCount;
 	assert(textureID.back().textureUnitNumber < GL_TEXTURE31);//エラー表示
 
 	textureUnitCount++;	//テクスチャーユニットカウントに加算
@@ -105,6 +105,9 @@ void FrameWork::Sprite::setDrawTextureID(unsigned char id)
 {
 	//assert(id < textureID.size());
 	glActiveTexture(textureID.at(id).textureUnitNumber);	
+	std::cout <<"textureID.at(id).ID:   "<< textureID.at(id).ID << std::endl;
+	std::cout << "textureID.at(id).textureUnitNumber:   "<<textureID.at(id).textureUnitNumber << std::endl;
+
 }
 
 //描画
@@ -115,42 +118,18 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 		setEnable();
 	}
 
+	setDrawTextureID(texNum);	//テクチャーユニットを設定
+
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	
-	setDrawTextureID((unsigned char)texNum);	//テクチャーユニットを設定
 
 	// ####################### 頂点属性のUVデータを更新  #######################
 	// 	
 	//UVサイズからピクセルサイズを算出
 	const float sizeX = 1.0f / (float)textureID.at(texNum).size.x;
 	const float sizeY = 1.0f / (float)textureID.at(texNum).size.y;
-
-
-
-
-	/*
-	//左上
-	rectangleVertex[0].uv[0] = sizeX * startSize.x;
-	rectangleVertex[0].uv[1] = 1.0f - (sizeY * startSize.y);
-
-	//左下
-	rectangleVertex[1].uv[0] = sizeX * startSize.x;
-	rectangleVertex[1].uv[1] = 1.0f - (sizeY * endSize.y);
-	rectangleVertex[4].uv[0] = sizeX * startSize.x;
-	rectangleVertex[4].uv[1] = 1.0f - (sizeY * endSize.y);
-
-	//右上
-	rectangleVertex[2].uv[0] = (sizeX * endSize.x);
-	rectangleVertex[2].uv[1] = 1.0f - (sizeY * startSize.y);
-	rectangleVertex[3].uv[0] = (sizeX * endSize.x);
-	rectangleVertex[3].uv[1] = 1.0f - (sizeY * startSize.y);
-
-	//右下
-	rectangleVertex[5].uv[0] = sizeX * endSize.x;
-	rectangleVertex[5].uv[1] = 1.0f - (sizeY * endSize.y);
-	*/
-
+//	std::cout << "aaa" << (float)textureID.at(texNum).size.x << std::endl;
 
 	//左上
 	rectangleVertex[0].uv[0] = sizeX * startSize.x;
@@ -216,7 +195,7 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 
 	//バインドを解除
 	glBindVertexArray(0);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 }

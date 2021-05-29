@@ -24,7 +24,9 @@ namespace FrameWork
 		//フレーム管理
 		void FrameUpdate();	//待機フレームを計算
 		void Wait();		//待機
-		int getFrame();		//フレームを取得
+		int getFrame();		//フレームを取得 60まで
+
+
 
 		const glm::vec2 getSize() const;		//サイズを取得
 		const std::string getDropPath()const;	//ドラック＆ドロップしたパスを取得
