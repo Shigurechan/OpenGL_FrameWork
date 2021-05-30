@@ -105,8 +105,8 @@ void FrameWork::Sprite::setDrawTextureID(unsigned char id)
 {
 	//assert(id < textureID.size());
 	glActiveTexture(textureID.at(id).textureUnitNumber);	
-	std::cout <<"textureID.at(id).ID:   "<< textureID.at(id).ID << std::endl;
-	std::cout << "textureID.at(id).textureUnitNumber:   "<<textureID.at(id).textureUnitNumber << std::endl;
+	//std::cout <<"textureID.at(id).ID:   "<< textureID.at(id).ID << std::endl;
+	//std::cout << "textureID.at(id).textureUnitNumber:   "<<textureID.at(id).textureUnitNumber << std::endl;
 
 }
 
