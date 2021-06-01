@@ -109,6 +109,7 @@ void FrameWork::Animation::ResetOnceClip()
 	isOnce = false;										//一回再生したかどうか？
 	flagOnce = false;									//切り替えフレームを設定一回だけの場合の時
 	isFirst = false;									//最初のフレームかどうか？
+	nowClip = 0;
 }
 
 
