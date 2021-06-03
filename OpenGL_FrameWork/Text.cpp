@@ -65,7 +65,7 @@ FrameWork::Text::Text(std::shared_ptr<Window> w, const char* vert, const char* f
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void FrameWork::Text::Draw(glm::vec2 pos, const char* text, float scale, glm::vec3 color)
+void FrameWork::Text::Draw(glm::vec2 pos, float scale, glm::vec3 color, const char* str, ...)
 //void FrameWork::Text::Draw(glm::vec2 pos, std::string text,float scale, glm::vec3 color)
 {
     setEnable();    //シェーダーを有効にする
@@ -86,6 +86,15 @@ void FrameWork::Text::Draw(glm::vec2 pos, const char* text, float scale, glm::ve
     //wchar_t txt[strlen(text)] = { L'\0' };
     wchar_t txt[1000] = { L'\0' };// = (wchar_t*)malloc(strlen(text));
 
+    char text[1000];
+    va_list args;
+    va_start(args, str);
+    
+    vsprintf_s(text, sizeof(text), str, args);
+
+
+
+    va_end(args);
 
 
     int i, j, f;
