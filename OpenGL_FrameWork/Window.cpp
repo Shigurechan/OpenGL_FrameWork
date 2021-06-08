@@ -10,7 +10,9 @@ FrameWork::Window::Window(int width, int height, const char* title)
 	:window(glfwCreateWindow(width, height, title, NULL, NULL))	
 {
 	std::fill(std::begin(keyBoard), std::end(keyBoard), 0);
+	std::fill(std::begin(mouseButton), std::end(mouseButton), 0);
 	
+
 
 	if (window == NULL)
 	{
@@ -19,8 +21,9 @@ FrameWork::Window::Window(int width, int height, const char* title)
 	}
 
 	glfwMakeContextCurrent(window);	//コンテキストを作成
-	glfwSwapInterval(1);
+	glfwSwapInterval(1);			//垂直同期
 	glewExperimental = GL_TRUE;
+
 	if (glewInit() != GLEW_OK)
 	{
 		std::cerr << "GLFW 初期化失敗" << std::endl;
@@ -69,12 +72,7 @@ void FrameWork::Window::MouseScroll(GLFWwindow* win,double x, double y)
 	{
 
 		instance->mouseWheel = y;
-	}
-
-
-
-//	mouseWheel = y;
-	
+	}	
 }
 
 //キー入力(文字入力)
@@ -145,9 +143,20 @@ glm::vec2 FrameWork::Window::getMousePos()
 }
 
 //マウスボタンが押されたかどうか？
-bool FrameWork::Window::getMouseButton(int mouse )
+int FrameWork::Window::getMouseButton(int mouse )
 {
-	return glfwGetMouseButton(window,mouse);
+	if (glfwGetMouseButton(window, mouse))
+	{
+		mouseButton[mouse]++;
+	}
+	else
+	{
+		mouseButton[mouse] = 0;
+	}
+
+
+
+	return mouseButton[mouse];
 }
 
 
@@ -193,7 +202,6 @@ void FrameWork::Window::Wait()
 	if ((int)(wait * 1000.0f) > 0)
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds((int)(wait * 1000.0f))); // 3 ミリ秒
-		//std::cout << wait * 1000.0f << std::endl;
 	}
 
 }
@@ -262,24 +270,16 @@ FrameWork::Window::operator bool()
 		exit(1);
 	}
 
-
-
-
 	//ウインドウを閉じる必要があれば false
 	if (glfwWindowShouldClose(window) != 0)
 	{
 		return false;
 	}
-	else {
+	else 
+	{
 		return true;
 	}
 }
-
-
-
-
-
-
 
 //ダブルバッファリング
 void FrameWork::Window::SwapBuffers()const

@@ -31,7 +31,7 @@ namespace FrameWork
 		const glm::vec2 getSize() const;		//サイズを取得
 		const std::string getDropPath()const;	//ドラック＆ドロップしたパスを取得
 		glm::vec2 getMousePos();				//マウス座標を取得
-		bool getMouseButton(int mouse);			//マウスボタンが押されたかどうか？
+		int getMouseButton(int mouse);			//マウスボタンが押されたかどうか？
 		double getMouseScroll();				//マウススクロールを取得
 		unsigned int InputKeyBoard();			//キー入力(文字入力)
 
@@ -46,7 +46,7 @@ namespace FrameWork
 		GLFWwindow* const window;	//ウインドウコンテキスト
 		glm::vec2 size;				//ウインドサイズ
 		int keyBoard[500];			//キー入力
-
+		int mouseButton[2];			//マウス入力
 
 		double mouseWheel = 0;	//マウスホイール
 		unsigned int inputKey = 0;	//文字入力
