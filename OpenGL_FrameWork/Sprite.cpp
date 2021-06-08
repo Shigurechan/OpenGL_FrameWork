@@ -100,11 +100,25 @@ void FrameWork::Sprite::setTexture(TextureData tex)
 	textureUnitCount++;	//テクスチャーユニットカウントに加算
 }
 
+//テクスチャサイズを取得
+glm::vec2 FrameWork::Sprite::getTextureSize(unsigned char id)
+{
+	return textureID.at(id).size;
+}
+
+
+
 //描画するアクティブなテクスチャに指定
 void FrameWork::Sprite::setDrawTextureID(unsigned char id)
 {
 	//assert(id < textureID.size());
-	glActiveTexture(textureID.at(id).textureUnitNumber);	
+	if (id < textureID.size())
+	{
+		glActiveTexture(textureID.at(id).textureUnitNumber);
+	}
+	else {
+		std::cout << "テクスチャユニット番号を超えています。" << std::endl;
+	}
 	//std::cout <<"textureID.at(id).ID:   "<< textureID.at(id).ID << std::endl;
 	//std::cout << "textureID.at(id).textureUnitNumber:   "<<textureID.at(id).textureUnitNumber << std::endl;
 
@@ -118,7 +132,7 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 		setEnable();
 	}
 
-	setDrawTextureID(texNum);	//テクチャーユニットを設定
+	//setDrawTextureID(texNum);	//テクチャーユニットを設定
 
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);

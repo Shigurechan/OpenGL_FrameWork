@@ -17,15 +17,18 @@ FrameWork::Shader::Shader()
 //シェーダーをロード
 bool FrameWork::Shader::LoadShader(const char* vert, const char* frag)
 {
+	if (program != 0)
+	{
+		glDeleteShader(program);
+	}
 
-	glDeleteShader(program);
 
 	program = loadProgram(vert, frag);
 
 	if (program == 0)
 	{
 		std::cerr << "シェーダープログラム作成エラー" << std::endl;
-		//assert(program);
+		assert(program);
 		//exit(1);
 		return false;
 	}

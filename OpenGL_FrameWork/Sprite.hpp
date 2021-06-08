@@ -25,7 +25,7 @@ namespace FrameWork
 
 		// ###################### メンバ関数 ###################### 	
 		void DrawGraph(glm::vec2 pos, unsigned char texNum,float r, glm::vec2 s,glm::vec2 startSize, glm::vec2 endSize);	//描画
-
+		glm::vec2 getTextureSize(unsigned char id);	//テクスチャサイズを取得
 		void setTexture(TextureData tex);			//テクスチャ設定
 
 	private:

@@ -16,9 +16,14 @@ FrameWork::Text::Text(std::shared_ptr<Window> w, const char* vert, const char* f
     //シェーダー
     if (vert == NULL && frag == NULL)
     {
+       // std::cout << "あああ" << std::endl;
+
         vert = "Shader/2D/BasicText_2D.vert";
         frag = "Shader/2D/BasicText_2D.frag";
-        LoadShader(vert,frag);
+        if (LoadShader(vert, frag) == false)
+        {
+            std::cout << "シェーダープログラムを作成できません。" << std::endl;
+        }
     }
     else {
         LoadShader(vert, frag);
@@ -66,7 +71,6 @@ FrameWork::Text::Text(std::shared_ptr<Window> w, const char* vert, const char* f
 }
 
 void FrameWork::Text::Draw(glm::vec2 pos, float scale, glm::vec3 color, const char* str, ...)
-//void FrameWork::Text::Draw(glm::vec2 pos, std::string text,float scale, glm::vec3 color)
 {
     setEnable();    //シェーダーを有効にする
 
@@ -76,6 +80,7 @@ void FrameWork::Text::Draw(glm::vec2 pos, float scale, glm::vec3 color, const ch
     //テクスチャをアクティブ
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(vao);
+
 
 
     //Unform

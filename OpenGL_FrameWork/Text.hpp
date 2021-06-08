@@ -6,7 +6,7 @@
 #include "glm/glm.hpp"
 #include <map>
 
-#include "freetype/ft2build.h"
+#include "ft2build.h"
 #include FT_FREETYPE_H
 
 namespace FrameWork
