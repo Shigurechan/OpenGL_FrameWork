@@ -19,6 +19,9 @@ FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char*
 	windowContext = w;	//ウインドウコンテキスト
 
 
+
+
+
 	//シェーダー読み込み
 	if (vert == NULL && frag == NULL)
 	{

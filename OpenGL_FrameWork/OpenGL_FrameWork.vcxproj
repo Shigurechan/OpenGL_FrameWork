@@ -148,11 +148,9 @@
     <ClInclude Include="Circle.hpp" />
     <ClInclude Include="FrameWork.hpp" />
     <ClInclude Include="Line.hpp" />
-    <ClInclude Include="Object.hpp" />
     <ClInclude Include="RandomNumber.hpp" />
     <ClInclude Include="Rectangle.hpp" />
     <ClInclude Include="Shader.hpp" />
-    <ClInclude Include="Shape.hpp" />
     <ClInclude Include="Sprite.hpp" />
     <ClInclude Include="Text.hpp" />
     <ClInclude Include="Texture.hpp" />

@@ -45,6 +45,7 @@ namespace FrameWork
 		{
 			GLfloat position[2];
 			GLfloat uv[2];
+
 		};
 
 		//í∏ì_ç¿ïW
