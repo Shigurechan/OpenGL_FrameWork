@@ -21,6 +21,7 @@ namespace FrameWork
 {
 	class Shader
 	{
+
 	public:
 		Shader();	//コンストラクタ
 		~Shader();	//デストラクタ
@@ -47,10 +48,7 @@ namespace FrameWork
 		void setUniformMatrix3fv(const char* name, const glm::mat3 m);
 		void setUniformMatrix4fv(const char* name, const glm::mat4 m);
 
-
-
 	private:
-
 
 		GLuint CreateProgram(const char* vsrc, const char* fsrc);				//プログラムオブジェクトを作成
 		GLboolean CompileInfoLog(GLuint shader, const char* str);				//コンパイルエラーログを取得

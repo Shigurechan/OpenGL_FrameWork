@@ -7,21 +7,19 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-//コンストラクタ
+// ##################################### コンストラクタ ##################################### 
 FrameWork::Shader::Shader()
 {
 	program = 0;	//シェーダープログラムを初期化
 }
 
-
-//シェーダーをロード
+// ##################################### シェーダーをロード ##################################### 
 bool FrameWork::Shader::LoadShader(const char* vert, const char* frag)
 {
 	if (program != 0)
 	{
 		glDeleteShader(program);
 	}
-
 
 	program = loadProgram(vert, frag);
 
@@ -38,45 +36,38 @@ bool FrameWork::Shader::LoadShader(const char* vert, const char* frag)
 
 
 
-
-//シェーダーをロード
+// ##################################### プログラムオブジェクトをロード ##################################### 
 GLuint FrameWork::Shader::loadProgram(const char* vert, const char* frag)
 {
 	std::vector<GLchar> vsrc;
 	const bool vstat = ReadShaderSource(vert, vsrc);
 	
-
 	std::vector<GLchar> fsrc;
 	const bool fstat = ReadShaderSource(frag, fsrc);
 	
 	if (vstat && fstat)
 	{
-		return CreateProgram(vsrc.data(), fsrc.data());
-		
+		return CreateProgram(vsrc.data(), fsrc.data());		
 	}
-	else {
-		//printf("あああ");
-		//assert(0 && "シェーダーファイル読み込みエラー");
+	else 
+	{
 		return 0;
 	}
 }
 
 
-
-//シェーダーファイルを読み込む
+// ##################################### シェーダーファイルを読み込む ##################################### 
 bool FrameWork::Shader::ReadShaderSource(const char* name, std::vector<GLchar>& buffer)
 {
 	if (name == NULL)
 	{
-		//assert(0 && "シェーダーファイルが指定されていません。");
+		assert(0 && "シェーダーファイルが指定されていません。");
 		return false;
 	}
 	
-
 	std::ifstream file(name, std::ios::binary);
 	if (file.fail() == true)
 	{
-		//printf("うううう");
 		std::cerr << "ソースファイルが読み込めません: " << name << std::endl;
 		file.close();
 		return false;
@@ -91,8 +82,6 @@ bool FrameWork::Shader::ReadShaderSource(const char* name, std::vector<GLchar>& 
 		file.read(buffer.data(), length);
 		buffer[length] = '\0';
 
-		
-
 		file.close();
 	}
 	file.close();
@@ -100,8 +89,7 @@ bool FrameWork::Shader::ReadShaderSource(const char* name, std::vector<GLchar>& 
 	return true;
 }
 
-
-//シェーダーエラーログを取得
+// ##################################### シェーダーエラーログを取得 ##################################### 
 GLboolean FrameWork::Shader::CompileInfoLog(GLuint shader,const char* str)
 {
 	GLint status;
@@ -126,12 +114,11 @@ GLboolean FrameWork::Shader::CompileInfoLog(GLuint shader,const char* str)
 		std::cerr<< &infoLog[0] << std::endl;
 	}
 
-
-
 	return (GLboolean)status;
 }
 
-//プログラムオブジェクト作成
+
+// ##################################### プログラムオブジェクト作成 ##################################### 
 GLuint FrameWork::Shader::CreateProgram(const char* vsrc, const char* fsrc)
 {
 	const GLuint program = glCreateProgram();	//シェーダープログラムを作成
@@ -152,7 +139,8 @@ GLuint FrameWork::Shader::CreateProgram(const char* vsrc, const char* fsrc)
 		glDeleteShader(vobj);
 
 	}
-	else {
+	else 
+	{
 		std::cout << "頂点シェーダー読み込み失敗" << std::endl;
 	}
 
@@ -168,7 +156,8 @@ GLuint FrameWork::Shader::CreateProgram(const char* vsrc, const char* fsrc)
 		glAttachShader(program, fobj);
 		glDeleteShader(fobj);
 	}
-	else {
+	else 
+	{
 		std::cout << "フラグメントシェーダー読み込み失敗" << std::endl;
 
 	}
@@ -179,7 +168,7 @@ GLuint FrameWork::Shader::CreateProgram(const char* vsrc, const char* fsrc)
 	return program;
 }
 
-//プログラムのエラーを表示
+// ##################################### プログラムのエラーを表示 ##################################### 
 GLboolean FrameWork::Shader::ProgramInfoLog(GLuint program)
 {
 	GLsizei bufSize;
@@ -201,15 +190,14 @@ GLboolean FrameWork::Shader::ProgramInfoLog(GLuint program)
 	}
 }
 
-//locationを取得
+// ##################################### Attriblocationを取得 ##################################### 
 GLint FrameWork::Shader::getAttribLocation(const char* str)
 {
 	return glGetAttribLocation(program,str);
 }
 
 
-
-//頂点シェーダーに属性変数を関連ずける
+// ##################################### 頂点シェーダーに属性変数を関連ずける ##################################### 
 void FrameWork::Shader::setBindAttribVertex(const char* str)
 {
 	GLint n = glGetAttribLocation(program, str);
@@ -225,8 +213,7 @@ void FrameWork::Shader::setBindAttribVertex(const char* str)
 	}
 }
 
-
-//フラグメントシェーダーに属性変数を関連ずける
+// ##################################### フラグメントシェーダーに属性変数を関連ずける ##################################### 
 void FrameWork::Shader::setBindAttribFragment(const char* str)
 {
 	GLint n = glGetAttribLocation(program, str);
@@ -242,21 +229,19 @@ void FrameWork::Shader::setBindAttribFragment(const char* str)
 	}
 }
 
-//有効にする
+// ##################################### 有効にする ##################################### 
 void FrameWork::Shader::setEnable()
 {
 	glUseProgram(program);
-
 }
 
-//無効にする
+// ##################################### 無効にする ##################################### 
 void FrameWork::Shader::setDisable()
 {
 	glUseProgram(0);
-
 }
 
-// ###################### Uniform 設定 ######################
+// ##################################### Uniform を設定 ##################################### 
   
 //vec1
 void FrameWork::Shader::setUniform1f(const char* name, const float vec)
@@ -290,7 +275,6 @@ void FrameWork::Shader::setUniform4f(const char* name, const glm::vec4 vec)
 	glUniform4f(object, vec.x, vec.y, vec.z, vec.w);	
 }
 
-
 //行列2
 void FrameWork::Shader::setUniformMatrix2fv(const char* name, const glm::mat2 m)
 {
@@ -316,9 +300,8 @@ void FrameWork::Shader::setUniformMatrix4fv(const char* name, const glm::mat4 m)
 
 }
 
-//デストラクタ
+// ##################################### デストラクタ ##################################### 
 FrameWork::Shader::~Shader()
 {
-	//std::cout << "shader class デストラクタ\n" << std::endl;	
 	glDeleteProgram(program);
 }

@@ -19,10 +19,10 @@ namespace FrameWork
 	{
 	public:
 		Line(std::shared_ptr<Window> w, const char* vert = NULL, const char* frag = NULL);		//コンストラクタ
-		~Line();																										//デストラクタ
+		~Line();																				//デストラクタ
 
-		void Draw(glm::vec2 start, glm::vec2 end, glm::vec4 color);													//描画
-		void DrawColor(glm::vec2 start, glm::vec2 end, glm::vec4 startColor, glm::vec4 endColor);					//描画
+		void Draw(glm::vec2 start, glm::vec2 end, glm::vec4 color);									//描画
+		void DrawColor(glm::vec2 start, glm::vec2 end, glm::vec4 startColor, glm::vec4 endColor);	//描画
 
 
 	private:

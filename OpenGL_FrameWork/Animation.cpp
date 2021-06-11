@@ -1,6 +1,7 @@
 #include "Animation.hpp"
 
-//コンストラクタ
+
+// ##################################### コンストラクタ ##################################### 
 FrameWork::Animation::Animation(std::shared_ptr<Window> w,int num)
 {
 	windowContext = w;									//ウインドウコンテキスト
@@ -15,8 +16,7 @@ FrameWork::Animation::Animation(std::shared_ptr<Window> w,int num)
 	isFirst = false;									//最初のフレームかどうか？
 }
 
-
-//アニメーションをするフレーム数を指定
+// ##################################### アニメーションをするフレーム数を指定 ##################################### 
 int FrameWork::Animation::getClip(int spd)
 {
 
@@ -58,7 +58,7 @@ int FrameWork::Animation::getClip(int spd)
 	return nowClip;
 }
 
-//一回だけ再生されるアニメーション
+// ##################################### 一回だけ再生されるアニメーション ##################################### 
 bool FrameWork::Animation::getOnceClip(int spd, int& clip)
 {
 	if (flagOnce == false)
@@ -68,21 +68,17 @@ bool FrameWork::Animation::getOnceClip(int spd, int& clip)
 			next = windowContext->getFrame() + spd;
 			isFirst = true;
 		}
-		else {
+		else 
+		{
 			next = windowContext->getFrame() + spd - 1;
-
 		}
 
 		if (next > FRAME_RATE)
 		{
 			next = next - windowContext->getFrame();
 		}
-
-
 		flagOnce = true;
 	}
-
-	//std::cout << "next: " << next << std::endl;
 
 	if (next == windowContext->getFrame())
 	{
@@ -96,13 +92,11 @@ bool FrameWork::Animation::getOnceClip(int spd, int& clip)
 		flagOnce = false;
 	}
 
-
-
 	clip = nowClip;
 	return isOnce;
 }
 
-//一回だけ再生をリセット
+// ##################################### 一回だけ再生をリセット ##################################### 
 void FrameWork::Animation::ResetOnceClip()
 {
 	flag = false;										//切り替えフレームを設定
@@ -112,12 +106,7 @@ void FrameWork::Animation::ResetOnceClip()
 	nowClip = 0;
 }
 
-
-
-
-
-
-//デストラクタ
+// ##################################### デストラクタ ##################################### 
 FrameWork::Animation::~Animation()
 {
 

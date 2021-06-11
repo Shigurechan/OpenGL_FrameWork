@@ -4,13 +4,12 @@
 
 double FrameWork::Window::lasttime = 0;
 
-
-//コンストラクタ
+// ##################################### コンストラクタ ##################################### 
 FrameWork::Window::Window(int width, int height, const char* title)
 	:window(glfwCreateWindow(width, height, title, NULL, NULL))	
 {
-	std::fill(std::begin(keyBoard), std::end(keyBoard), 0);
-	std::fill(std::begin(mouseButton), std::end(mouseButton), 0);
+	std::fill(std::begin(keyBoard), std::end(keyBoard), 0);				//キーボード入力配列を初期化
+	std::fill(std::begin(mouseButton), std::end(mouseButton), 0);		//マウス入力配列を初期化
 	
 
 
@@ -45,7 +44,7 @@ FrameWork::Window::Window(int width, int height, const char* title)
 
 }
 
-//サイズ変更
+// ##################################### 画面サイズ変更 ##################################### 
 void FrameWork::Window::Resize(GLFWwindow* const win, int width, int height)
 {
 	int fbWidth, fbHeight;
@@ -62,7 +61,7 @@ void FrameWork::Window::Resize(GLFWwindow* const win, int width, int height)
 
 }
 
-//マウススクロール
+// ##################################### マウススクロール ##################################### 
 void FrameWork::Window::MouseScroll(GLFWwindow* win,double x, double y)
 {
 
@@ -75,49 +74,19 @@ void FrameWork::Window::MouseScroll(GLFWwindow* win,double x, double y)
 	}	
 }
 
-//キー入力(文字入力)
-void FrameWork::Window::KeyInputString(GLFWwindow* win, unsigned int n)
-{
-
-	Window* const instance = (Window*)glfwGetWindowUserPointer(win);
-
-	if (instance != NULL)
-	{
-
-		instance->inputKey = n;
-	}
-
-}
-
-//キー入力(文字入力)
-unsigned int FrameWork::Window::InputKeyBoard()
-{
-	return inputKey;
-}
-
-
-
-
-
-
-//マウススクロールを取得
+// ##################################### マウススクロールを取得 ##################################### 
 double FrameWork::Window::getMouseScroll()
 {
 	return mouseWheel;
 }
 
-
-
-//ドラック＆ドロップしたパスを取得
+// ##################################### ドラック＆ドロップしたパスを取得 ##################################### 
 const std::string FrameWork::Window::getDropPath()const
 {
 	return drop;
 }
 
-
-
-
-//ドラック＆ドロップ
+// ##################################### ドラック＆ドロップ ##################################### 
 void FrameWork::Window::DragAndDrop(GLFWwindow* const win,int num, const char* str[])
 {
 
@@ -129,8 +98,7 @@ void FrameWork::Window::DragAndDrop(GLFWwindow* const win,int num, const char* s
 		instance->drop = std::string(str[0]);		
 	}
 }
-
-//マウス座標を取得
+// ##################################### マウス座標を取得 ##################################### 
 glm::vec2 FrameWork::Window::getMousePos()
 {
 	double x;
@@ -141,8 +109,7 @@ glm::vec2 FrameWork::Window::getMousePos()
 
 	return pos;
 }
-
-//マウスボタンが押されたかどうか？
+// ##################################### マウスボタン入力 ##################################### 
 int FrameWork::Window::getMouseButton(int mouse )
 {
 	if (glfwGetMouseButton(window, mouse))
@@ -160,8 +127,7 @@ int FrameWork::Window::getMouseButton(int mouse )
 }
 
 
-
-//待機フレームを計算
+// ##################################### 待機フレームを計算 ##################################### 
 void FrameWork::Window::FrameUpdate()
 {
 
@@ -172,31 +138,22 @@ void FrameWork::Window::FrameUpdate()
 		count = 0;
 	}
 
-
-
 	if (count == 0)
 	{
 		startCount = ((int)(glfwGetTime() * 1000.0f));
-		//std::cout << "startCount: " << startCount << std::endl;
-
-
 	}
-
-
 	count++;
 
 }
 
-
-//フレームを取得
+// ##################################### フレームを取得 ##################################### 
 int FrameWork::Window::getFrame()
 {
 	return count;
 
 }
 
-
-//待機
+// ##################################### フレームレート　待機 ##################################### 
 void FrameWork::Window::Wait()
 {
 	if ((int)(wait * 1000.0f) > 0)
@@ -206,19 +163,13 @@ void FrameWork::Window::Wait()
 
 }
 
-
-
-
-
-
-
-//ウインドウサイズを取得
+// ##################################### ウインドウサイズを取得 ##################################### 
 const glm::vec2 FrameWork::Window::getSize() const
 {
 	return size;
 }
 
-//キー入力を取得
+// ##################################### キー入力 ##################################### 
 const int FrameWork::Window::getKeyInput(int input)
 {
 	int key = glfwGetKey(window, input);
@@ -243,26 +194,19 @@ const int FrameWork::Window::getKeyInput(int input)
 	return keyBoard[input];
 }
 
-
-//bool 演算子
+// ##################################### bool演算子 ##################################### 
 FrameWork::Window::operator bool()
 {
 	glfwPollEvents();	//イベントを取り出す
 
-
-//#define DEBUG 
 #ifndef DEBUG
-
 	//エラー処理
 	GLenum err;
 	while ((err = glGetError()) != GL_NO_ERROR)
 	{
 		std::cout << "glGetError(): 0x" << std::hex << err << std::endl;
 	}
-
-
 #endif
-
 	
 	//ESCキーで終了
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == 1)
@@ -281,13 +225,13 @@ FrameWork::Window::operator bool()
 	}
 }
 
-//ダブルバッファリング
+// ##################################### ダブルバッファリング ##################################### 
 void FrameWork::Window::SwapBuffers()const
 {
 	glfwSwapBuffers(window);
 }
 
-//デストラクタ
+// ##################################### デストラクタ ##################################### 
 FrameWork::Window::~Window()
 {
 	glfwDestroyWindow(window);

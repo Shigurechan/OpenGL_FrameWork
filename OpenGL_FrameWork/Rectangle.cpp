@@ -2,8 +2,7 @@
 #include "Window.hpp"
 #include "Shader.hpp"
 
-
-// ###################### コンストラクタ ###################### 
+// ##################################### コンストラクタ ##################################### 
 FrameWork::Rectangle::Rectangle(std::shared_ptr<Window> w, const char* vert, const char* frag) : Transform_2D(), Shader()
 {
 	
@@ -54,16 +53,13 @@ FrameWork::Rectangle::Rectangle(std::shared_ptr<Window> w, const char* vert, con
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-// ###################### メンバ関数 ###################### 
 
-//頂点カラーを設定
+// ##################################### 頂点カラーを設定 ##################################### 
 void FrameWork::Rectangle::setVertexALLColor(glm::vec4 color)
 {
-	
-
 	float c = 1.0f / 255.0f;
 
-	rectangleVertex[0].color[0] =  c * color.x;
+	rectangleVertex[0].color[0] = c * color.x;
 	rectangleVertex[0].color[1] = c * color.y;
 	rectangleVertex[0].color[2] = c * color.z;
 	rectangleVertex[0].color[3] = c * color.w;
@@ -92,39 +88,18 @@ void FrameWork::Rectangle::setVertexALLColor(glm::vec4 color)
 	rectangleVertex[5].color[1] = c * color.y;
 	rectangleVertex[5].color[2] = c * color.z;
 	rectangleVertex[5].color[3] = c * color.w;
-
-
 }
 
-
-//頂点カラーを設定
-void FrameWork::Rectangle::setVertexColor(int vertNum,glm::vec4 color)
-{
-	float c = 1.0f / 255.0f;
-
-	
-	rectangleVertex[vertNum].color[0] = c * color.x;
-	rectangleVertex[vertNum].color[1] = c * color.y;
-	rectangleVertex[vertNum].color[2] = c * color.z;
-	rectangleVertex[vertNum].color[3] = c * color.w;
-
-}
-
-
-
-
-
-//描画
+// ##################################### 描画 ##################################### 
 void FrameWork::Rectangle::Draw(glm::vec2 start,glm::vec2 end,float r,glm::vec2 s,glm::vec4 color)
 {
 	if (isDefaultShader == true) 
 	{
 		setEnable();
 	}
+
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-
 	
 	if (isDefaultShader == true)
 	{
@@ -137,7 +112,6 @@ void FrameWork::Rectangle::Draw(glm::vec2 start,glm::vec2 end,float r,glm::vec2 
 		glVertexAttribPointer(attrib, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(sizeof(GLfloat) * 2));
 		setBindAttribFragment("vertexColor");
 	}
-
 	
 	//Transform
 	setSizeScale(glm::vec2((end.x - start.x), (end.y - start.y)));			//サイズ	
@@ -151,9 +125,7 @@ void FrameWork::Rectangle::Draw(glm::vec2 start,glm::vec2 end,float r,glm::vec2 
 	setUniformMatrix4fv("uScale", scale);
 	setUniformMatrix4fv("uViewProjection", glm::ortho(0.0f, windowContext->getSize().x, windowContext->getSize().y, 0.0f, -1.0f, 1.0f));
 	
-
 	glDrawArrays(GL_TRIANGLES, 0, 6);
-
 
 	//バインドを解除
 	glBindVertexArray(0);
@@ -166,7 +138,7 @@ void FrameWork::Rectangle::Draw(glm::vec2 start,glm::vec2 end,float r,glm::vec2 
 
 }
 
-// ###################### デストラクタ ###################### 
+// ##################################### デストラクタ ##################################### 
 FrameWork::Rectangle::~Rectangle()
 {
 

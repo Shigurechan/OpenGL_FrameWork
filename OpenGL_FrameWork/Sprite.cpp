@@ -13,7 +13,7 @@
 #include "stb/stb_image.h"
 
 
-//コンストラクタ
+// ##################################### コンストラクタ ##################################### 
 FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char* frag) : Transform_2D(),Shader()
 {
 	windowContext = w;	//ウインドウコンテキスト
@@ -74,9 +74,8 @@ FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char*
 }
 
 
-// ######################################## メンバ関数 ######################################## 
 
-//テクスチャ設定
+// ##################################### テクスチャを設定 ##################################### 
 void FrameWork::Sprite::setTexture(TextureData tex)
 {
 	
@@ -103,31 +102,27 @@ void FrameWork::Sprite::setTexture(TextureData tex)
 	textureUnitCount++;	//テクスチャーユニットカウントに加算
 }
 
-//テクスチャサイズを取得
+// ##################################### テクスチャサイズを取得 ##################################### 
 glm::vec2 FrameWork::Sprite::getTextureSize(unsigned char id)
 {
 	return textureID.at(id).size;
 }
 
 
-
-//描画するアクティブなテクスチャに指定
+// ##################################### 描画するアクティブなテクスチャに指定 ##################################### 
 void FrameWork::Sprite::setDrawTextureID(unsigned char id)
 {
-	//assert(id < textureID.size());
 	if (id < textureID.size())
 	{
 		glActiveTexture(textureID.at(id).textureUnitNumber);
 	}
-	else {
+	else 
+	{
 		std::cout << "テクスチャユニット番号を超えています。" << std::endl;
 	}
-	//std::cout <<"textureID.at(id).ID:   "<< textureID.at(id).ID << std::endl;
-	//std::cout << "textureID.at(id).textureUnitNumber:   "<<textureID.at(id).textureUnitNumber << std::endl;
-
 }
 
-//描画
+// ##################################### 描画 ##################################### 
 void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,glm::vec2 s,glm::vec2 startSize,glm::vec2 endSize)
 {
 	if (isDefaultShader == true)
@@ -135,18 +130,15 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 		setEnable();
 	}
 
-	//setDrawTextureID(texNum);	//テクチャーユニットを設定
-
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	
 
 	// ####################### 頂点属性のUVデータを更新  #######################
-	// 	
+	
 	//UVサイズからピクセルサイズを算出
 	const float sizeX = 1.0f / (float)textureID.at(texNum).size.x;
 	const float sizeY = 1.0f / (float)textureID.at(texNum).size.y;
-//	std::cout << "aaa" << (float)textureID.at(texNum).size.x << std::endl;
 
 	//左上
 	rectangleVertex[0].uv[0] = sizeX * startSize.x;
@@ -168,22 +160,10 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	rectangleVertex[5].uv[0] = sizeX * endSize.x;
 	rectangleVertex[5].uv[1] = sizeY * startSize.y;
 
-
-
-
-
-
-
-
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(VertexUV) * 6, rectangleVertex);
 	//  ################################################### 
 
-
-	
-	//std::cout << windowContext->getSize().x << std::endl;
-
 	//Transform
-	//printf("%f\n", rectangleVertex[2].uv[0]);
 	setSizeScale(glm::vec2(std::abs((endSize.x - startSize.x)), (std::abs(endSize.y - startSize.y))));			//サイズ	
 	setScale(s);																								//スケール
 	setRotate(r);																								//回転
@@ -195,15 +175,9 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	setUniformMatrix4fv("uScale", scale);
 	setUniformMatrix4fv("uViewProjection", glm::ortho(0.0f, windowContext->getSize().x, windowContext->getSize().y, 0.0f, -1.0f, 1.0f));
 
-	
-
-
 	//バインド＆描画
 	glBindTexture(GL_TEXTURE_2D, textureID.at(texNum).ID);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
-
-	
-
 
 	if (isDefaultShader == true)
 	{
@@ -218,26 +192,17 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 }
 
 
-//デストラクタ
+// ##################################### デストラクタ ##################################### 
 FrameWork::Sprite::~Sprite()
 {
-
-	//std::cout << "デストラクタ" << std::endl;
-
-	//テクスチャーIDを開放
 	for (int i = 0; i < textureID.size(); i++)
 	{
-		glDeleteTextures(1,&textureID.at(i).ID);
-	
-		stbi_image_free(textureID.at(i).fileData);
-		textureID.at(i).fileData = NULL;
-
-
-
+		glDeleteTextures(1,&textureID.at(i).ID);		//
+		stbi_image_free(textureID.at(i).fileData);		//
+		textureID.at(i).fileData = NULL;				//
 	}
 
-	glDeleteVertexArrays(1, &vao);
-	glDeleteBuffers(1, &vbo);
-	
+	glDeleteVertexArrays(1, &vao);	//
+	glDeleteBuffers(1, &vbo);		//
 }
 

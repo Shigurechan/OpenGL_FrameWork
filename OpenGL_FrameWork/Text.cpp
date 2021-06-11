@@ -6,6 +6,7 @@
 #include "Window.hpp"
 #include <iostream>
 
+// ##################################### コンストラクタ ##################################### 
 FrameWork::Text::Text(std::shared_ptr<Window> w, const char* vert, const char* frag) : FrameWork::Transform_2D(),Shader()
 {
     setlocale(LC_CTYPE, "");
@@ -70,6 +71,7 @@ FrameWork::Text::Text(std::shared_ptr<Window> w, const char* vert, const char* f
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
+// ##################################### 描画 ##################################### 
 void FrameWork::Text::Draw(glm::vec2 pos, float scale, glm::vec3 color, const char* str, ...)
 {
     setEnable();    //シェーダーを有効にする
@@ -182,17 +184,14 @@ void FrameWork::Text::Draw(glm::vec2 pos, float scale, glm::vec3 color, const ch
         pos.x += ((ch.Advance >> 6) * scale); // bitshift by 6 to get value in pixels (2^6 = 64)
 
     }
-    
 
-
-    
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
     setDisable();   //シェーダーを無効にする
 }
 
 
-
+// ##################################### デストラクタ ##################################### 
 FrameWork::Text::~Text()
 {
     //グリフ解放

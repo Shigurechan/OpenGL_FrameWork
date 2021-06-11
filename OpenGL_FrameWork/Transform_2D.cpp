@@ -1,6 +1,6 @@
 #include "Transform_2D.hpp"
 
-// ###################### コンストラクタ ###################### 
+// ##################################### コンストラクタ ##################################### 
 FrameWork::Transform_2D::Transform_2D()
 {
 	size = glm::vec2(0,0);
@@ -14,45 +14,39 @@ FrameWork::Transform_2D::Transform_2D()
 	translate = glm::translate(glm::mat4(1), glm::vec3(0.0f,0.0f,0.0f));
 }
 
-// ###################### メンバ関数 ###################### 
-
-//スケール
+// ##################################### スケールを設定 ##################################### 
 void FrameWork::Transform_2D::setScale(glm::vec2 s)
 {
 	scale = glm::scale(glm::mat4(1), glm::vec3(s.x,s.y,0.0f) + glm::vec3(size.x,size.y,0.0f));
 }
 
-//回転
+// ##################################### 回転を設定 ##################################### 
 void FrameWork::Transform_2D::setRotate(float a)
 {
 	rotate = glm::rotate(glm::mat4(1), a, glm::vec3(0.0,0.0,1.0));	//回転	
 }
 
-//平行移動
+// ##################################### 平行移動を設定 ##################################### 
 void FrameWork::Transform_2D::setTranslate(glm::vec3 t)
 {	
-	//printf("X: %f\n", t.x);
-	//printf("Y: %f\n",t.y);
-
-
 	translate = glm::translate(glm::mat4(1), t);
 }
 
-//画像サイズを設定
+// ##################################### 画像と同じサイズに拡大 ##################################### 
 void FrameWork::Transform_2D::setSizeScale(glm::vec2 s)
 {
 	size = s;
 	scale = glm::scale(glm::mat4(1), glm::vec3(s.x, s.y, 0.0f));
 }
 
-//画像サイズを設定
+// ##################################### 画像サイズを取得 ##################################### 
 glm::vec2 FrameWork::Transform_2D::getSizeScale()
 {
 	return size;
 	
 }
 
-// ###################### デストラクタ ###################### 
+// ##################################### デストラクタ ##################################### 
 FrameWork::Transform_2D::~Transform_2D()
 {
 

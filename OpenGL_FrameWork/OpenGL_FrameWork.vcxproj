@@ -163,7 +163,6 @@
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="FrameWork.cpp" />
     <ClCompile Include="Line.cpp" />
-    <ClCompile Include="Object.cpp" />
     <ClCompile Include="RandomNumber.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Shader.cpp" />

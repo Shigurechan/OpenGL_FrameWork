@@ -86,9 +86,6 @@
     <ClCompile Include="Line.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="RandomNumber.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>

@@ -1,7 +1,11 @@
 #include "Circle.hpp"
+
 #include "Window.hpp"
 #include "FrameWork.hpp"
-//コンストラクタ
+
+
+
+// ##################################### コンストラクタ ##################################### 
 FrameWork::Circle::Circle(std::shared_ptr<Window> w,const char* vert, const char* frag) : Transform_2D(),Shader()
 {
 	windowContext = w;	//ウインドウコンテキスト
@@ -36,10 +40,7 @@ FrameWork::Circle::Circle(std::shared_ptr<Window> w,const char* vert, const char
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-
-
-
-//描画
+// ##################################### 描画 ##################################### 
 void FrameWork::Circle::Draw(glm::vec2 pos, int num, float r,glm::vec4 color)
 {
 	if (isDefaultShader == true) 
@@ -94,6 +95,7 @@ void FrameWork::Circle::Draw(glm::vec2 pos, int num, float r,glm::vec4 color)
 
 	glDrawArrays(GL_TRIANGLE_FAN, 0, num);
 	glBindVertexArray(0);
+
 	if (isDefaultShader == true) 
 	{
 		setDisable();
@@ -101,15 +103,7 @@ void FrameWork::Circle::Draw(glm::vec2 pos, int num, float r,glm::vec4 color)
 
 }
 
-
-
-
-
-
-
-
-
-//デストラクタ
+// ##################################### デストラクタ ##################################### 
 FrameWork::Circle::~Circle()
 {
 
