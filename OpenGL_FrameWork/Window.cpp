@@ -38,7 +38,7 @@ FrameWork::Window::Window(int width, int height, const char* title)
 	glfwSetWindowSizeCallback(window, Resize);	//ウインドウサイズを変更する時に呼び出す処理
 	glfwSetDropCallback(window,DragAndDrop);	//ドラック＆ドロップ
 	glfwSetScrollCallback(window,MouseScroll);	//マウスのホイール
-	glfwSetCharCallback(window,KeyInputString);		//キー入力(文字入力)
+	//glfwSetCharCallback(window,KeyInputString);		//キー入力(文字入力)
 
 	Resize(window, width, height);				//リサイズ
 
