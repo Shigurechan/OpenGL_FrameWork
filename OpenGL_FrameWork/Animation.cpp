@@ -1,6 +1,5 @@
 #include "Animation.hpp"
 
-
 // ##################################### コンストラクタ ##################################### 
 FrameWork::Animation::Animation(std::shared_ptr<Window> w,int num)
 {
@@ -27,16 +26,15 @@ int FrameWork::Animation::getClip(int spd)
 			next = windowContext->getFrame() + spd;
 			isFirst = true;
 		}
-		else {
+		else 
+		{
 			next = windowContext->getFrame() + spd - 1;
-
 		}
 
 		if (next > FRAME_RATE)
 		{
 			next = next - windowContext->getFrame();
 		}
-
 
 		flag = true;
 	}
@@ -103,7 +101,7 @@ void FrameWork::Animation::ResetOnceClip()
 	isOnce = false;										//一回再生したかどうか？
 	flagOnce = false;									//切り替えフレームを設定一回だけの場合の時
 	isFirst = false;									//最初のフレームかどうか？
-	nowClip = 0;
+	nowClip = 0;										//現在のクリップ
 }
 
 // ##################################### デストラクタ ##################################### 

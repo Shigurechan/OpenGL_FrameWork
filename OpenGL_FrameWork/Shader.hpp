@@ -1,22 +1,15 @@
-#ifndef ___SHADER_HPP
-#define ___SHADER_HPP
-
+#ifndef ___SHADER_HPP_
+#define ___SHADER_HPP_
 #include <iostream>
 #include <vector>
 #include "glm/glm.hpp"
-
-
 #include <glew/include/GL/glew.h>
-//#include <glfw/include/GLFW/glfw3.h>
-
 /*#########################################################################
 # シェーダークラス
 
 説明
 	継承してシェーダーを実装
 ###########################################################################*/
-
-
 namespace FrameWork
 {
 	class Shader
@@ -28,14 +21,12 @@ namespace FrameWork
 
 		bool LoadShader(const char* vert, const char* frag);	//シェーダー読み込み
 
-
 		void setEnable();	//有効
 		void setDisable();	//無効
 
 		void setBindAttribVertex(const char* str);		//頂点シェーダーに属性変数を関連ずける
 		void setBindAttribFragment(const char* str);	//フラグメントシェーダーに属性変数を関連ずける
 		GLint getAttribLocation(const char* str);		//locationを取得
-
 
 		//Uniform 設定
 		void setUniform1f(const char* name, const float vec);

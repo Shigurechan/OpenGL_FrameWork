@@ -18,10 +18,6 @@ FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char*
 {
 	windowContext = w;	//ウインドウコンテキスト
 
-
-
-
-
 	//シェーダー読み込み
 	if (vert == NULL && frag == NULL)
 	{
@@ -54,7 +50,6 @@ FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char*
 	//頂点	
 	GLint attrib = getAttribLocation("vertexPosition");
 	glEnableVertexAttribArray(attrib);
-	//glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(VertexUV), rectangleVertex, GL_STATIC_DRAW);
 	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(VertexUV), rectangleVertex, GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(attrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)0);
 	setBindAttribVertex("vertexPosition");
@@ -62,10 +57,14 @@ FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char*
 	//UV
 	attrib = getAttribLocation("vertexUV");
 	glEnableVertexAttribArray(attrib);
-	//glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(VertexUV), rectangleVertex, GL_STATIC_DRAW);
 	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(VertexUV), rectangleVertex, GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(attrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)(sizeof(GLfloat) * 2));
 	setBindAttribVertex("vertexUV");
+
+
+
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
 	//アルファブレンド有効
@@ -97,7 +96,9 @@ void FrameWork::Sprite::setTexture(TextureData tex)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	textureID.back().textureUnitNumber = GL_TEXTURE0 + (int)textureUnitCount;
-	assert(textureID.back().textureUnitNumber < GL_TEXTURE31);//エラー表示
+
+	//テクスチャユニットを設定できない場合はエラー
+	assert(textureID.back().textureUnitNumber < GL_TEXTURE31);
 
 	textureUnitCount++;	//テクスチャーユニットカウントに加算
 }
@@ -118,24 +119,19 @@ void FrameWork::Sprite::setDrawTextureID(unsigned char id)
 	}
 	else 
 	{
-		std::cout << "テクスチャユニット番号を超えています。" << std::endl;
+		std::cerr << "テクスチャユニット番号を超えています。" << std::endl;
 	}
 }
 
 // ##################################### 描画 ##################################### 
 void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,glm::vec2 s,glm::vec2 startSize,glm::vec2 endSize)
 {
-	if (isDefaultShader == true)
-	{
-		setEnable();
-	}
-
+	if (isDefaultShader == true) { setEnable(); }
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	
 
-	// ####################### 頂点属性のUVデータを更新  #######################
-	
+
+	// ####################### 頂点属性のUVデータを更新  #######################	
 	//UVサイズからピクセルサイズを算出
 	const float sizeX = 1.0f / (float)textureID.at(texNum).size.x;
 	const float sizeY = 1.0f / (float)textureID.at(texNum).size.y;
@@ -176,19 +172,16 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	setUniformMatrix4fv("uViewProjection", glm::ortho(0.0f, windowContext->getSize().x, windowContext->getSize().y, 0.0f, -1.0f, 1.0f));
 
 	//バインド＆描画
+	
 	glBindTexture(GL_TEXTURE_2D, textureID.at(texNum).ID);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
-
-	if (isDefaultShader == true)
-	{
-		setDisable();
-	}
 
 	//バインドを解除
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
+	if (isDefaultShader == true) { setDisable(); }	
 }
 
 

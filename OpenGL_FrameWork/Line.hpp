@@ -1,9 +1,7 @@
 #ifndef ___LINE_HPP_
 #define ___LINE_HPP_
-
 #include "Transform_2D.hpp"
 #include "Shader.hpp"
-
 #include <iostream>
 /*#########################################################################
 # Line クラス
@@ -22,8 +20,6 @@ namespace FrameWork
 		~Line();																				//デストラクタ
 
 		void Draw(glm::vec2 start, glm::vec2 end, glm::vec4 color);									//描画
-		void DrawColor(glm::vec2 start, glm::vec2 end, glm::vec4 startColor, glm::vec4 endColor);	//描画
-
 
 	private:
 
@@ -32,7 +28,6 @@ namespace FrameWork
 			{-0.5f,-0.5f,	0.0f,1.0f,0.0f,1.0f},
 			{0.5f,0.5f,		0.0f,1.0f,0.0f,1.0f}
 		};
-
 
 		std::shared_ptr<Window> windowContext;	//ウインドウコンテキスト
 	};

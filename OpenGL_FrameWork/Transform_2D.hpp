@@ -1,22 +1,16 @@
 #ifndef ___Transform_2D_HPP_
 #define ___Transform_2D_HPP_
-
 #include <iostream>
 #include "glm/glm.hpp"
 #include <glm/gtc/matrix_Transform.hpp>
 #include <glm/gtx/Transform.hpp>
-
-
 #include <glew/include/GL/glew.h>
-
-
 /*#########################################################################
 # トランスフォームクラス: Actorクラスを継承
 
 説明
 	全ての2D描画物はこれを継承する
 ###########################################################################*/
-
 namespace FrameWork
 {
 	class Window;
@@ -27,9 +21,6 @@ namespace FrameWork
 
 		Transform_2D();		//コンストラクタ
 		~Transform_2D();	//デストラクタ
-
-
-
 
 	protected:
 
@@ -61,10 +52,6 @@ namespace FrameWork
 			GLfloat color[4];
 		};
 
-
-
-
-
 		GLuint vao;							//VertexArrayObject
 		GLuint vbo;							//VertexBufferObject	
 
@@ -76,8 +63,8 @@ namespace FrameWork
 		glm::mat4 translate;	//平行移動
 
 	private:
-		glm::vec2 size;			//画像サイズ
 
+		glm::vec2 size;			//画像サイズ
 	};
 }
 

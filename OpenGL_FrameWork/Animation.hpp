@@ -2,19 +2,16 @@
 #define ___ANIMATION_HPP_
 #include "Window.hpp"
 #include <iostream>
-
-
-
 /*############################################################################################
 * アニメーションクラス　
 *
 * 説明
 *	
 ##############################################################################################*/
-class Window;
-
 namespace FrameWork
 {
+	class Window;
+
 	class Animation
 	{
 	public:
@@ -25,7 +22,6 @@ namespace FrameWork
 		bool getOnceClip(int spd,int &clip);		//一回だけ再生されるアニメーション
 		void ResetOnceClip();						//一回だけ再生をリセット
 
-
 	private:
 
 		std::shared_ptr<Window> windowContext;				//ウインドウコンテキスト
@@ -33,12 +29,10 @@ namespace FrameWork
 		int next;											//次のクリップまでのフレーム
 		int nowClip;										//現在のクリップ
 		int speed;											//フレーム速度を指定
-
 		bool isOnce;										//一回再生したかどうか？
 		bool flagOnce;										//切り替えフレームを設定一回だけの場合の時
-		bool isFirst;											//最初のフレーム
+		bool isFirst;										//最初のフレーム
 		bool flag;											//切り替えフレームを設定
-
 	};
 };
 #endif

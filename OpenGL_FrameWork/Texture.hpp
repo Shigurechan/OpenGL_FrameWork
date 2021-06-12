@@ -1,21 +1,16 @@
 #ifndef ___TEXTURE_HPP_
 #define ___TEXTURE_HPP_
-
 #include <iostream>
 #include "glm/glm.hpp"
 #include "glew/include/GL/glew.h"
-
 /*#########################################################################
 # テクスチャ構造体
 
 説明
 	テクスチャのデータ
 ###########################################################################*/
-
-
 namespace FrameWork
 {
-
 	//テクスチャデータ構造体
 	typedef struct
 	{
@@ -28,5 +23,4 @@ namespace FrameWork
 
 	TextureData LoadTexture(const char* fileName);	//テクスチャーロード
 }
-
 #endif

@@ -4,13 +4,11 @@
 #include "FrameWork.hpp"
 
 
-
 // ##################################### コンストラクタ ##################################### 
 FrameWork::Circle::Circle(std::shared_ptr<Window> w,const char* vert, const char* frag) : Transform_2D(),Shader()
 {
 	windowContext = w;	//ウインドウコンテキスト
-
-	vertex = std::vector<Transform_2D::VertexColor>();	//頂点属性配列
+	vertex.resize(100);		//頂点配列
 
 	if (vert == NULL && frag == NULL)
 	{
@@ -25,39 +23,53 @@ FrameWork::Circle::Circle(std::shared_ptr<Window> w,const char* vert, const char
 		isDefaultShader = false;
 	}
 
-	//頂点情報
+	//vbo
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
 	//vao
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
-	//vbo
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	//頂点	
+	GLint attrib = getAttribLocation("vertexPosition");
+	glEnableVertexAttribArray(attrib);
+	glBufferData(GL_ARRAY_BUFFER, vertex.size() * sizeof(VertexColor), vertex.data(), GL_DYNAMIC_DRAW);
+	glVertexAttribPointer(attrib, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
+	setBindAttribVertex("vertexPosition");
 
-	//アルファブレンド有効
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//頂点カラー
+	attrib = getAttribLocation("vertexColor");
+	glEnableVertexAttribArray(attrib);
+	glBufferData(GL_ARRAY_BUFFER, vertex.size() * sizeof(VertexColor), vertex.data(), GL_DYNAMIC_DRAW);
+	glVertexAttribPointer(attrib, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(sizeof(GLfloat) * 2));
+	setBindAttribVertex("vertexColor");
+
+	
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glEnable(GL_BLEND);	//アルファブレンド有効
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	//ブレンドタイプ
 }
 
 // ##################################### 描画 ##################################### 
 void FrameWork::Circle::Draw(glm::vec2 pos, int num, float r,glm::vec4 color)
 {
-	if (isDefaultShader == true) 
-	{
-		setEnable();
-	}
+	if (isDefaultShader == true) { setEnable(); }
+	
+	glBindVertexArray(vao);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-	if (count != num) 
+
+	if (vertex.size() != num)
 	{
-		count = num;
 		vertex.resize(num);
 		float c = 1.0f / 255.0f;
-		float n = (PI * 2.0f) / (float)num;
+		float n = (PI * 2.0f) / (float)vertex.size();
 		float t = 0.0f;
-		for (int i = 0; i < num; i++)
+		for (int i = 0; i < vertex.size(); i++)
 		{
-			
 			vertex.at(i).position[0] = cos(t) * r;
 			vertex.at(i).position[1] = sin(t) * r;
 
@@ -65,43 +77,35 @@ void FrameWork::Circle::Draw(glm::vec2 pos, int num, float r,glm::vec4 color)
 			vertex.at(i).color[1] = c * color.y;
 			vertex.at(i).color[2] = c * color.z;
 			vertex.at(i).color[3] = c * color.w;
-			
+
 			t += n;
 		}
+
+		glBufferSubData(GL_ARRAY_BUFFER, 0, vertex.size() * sizeof(VertexColor), vertex.data());
 	}
 
-	//頂点	
-	GLint attrib = getAttribLocation("vertexPosition");
-	glEnableVertexAttribArray(attrib);
-	glBufferData(GL_ARRAY_BUFFER, num * sizeof(VertexColor), vertex.data(), GL_STATIC_DRAW);
-	glVertexAttribPointer(attrib, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
-	setBindAttribVertex("vertexPosition");
 
-	//頂点カラー
-	attrib = getAttribLocation("vertexColor");
-	glEnableVertexAttribArray(attrib);
-	glBufferData(GL_ARRAY_BUFFER, num * sizeof(VertexColor), vertex.data(), GL_STATIC_DRAW);
-	glVertexAttribPointer(attrib, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(sizeof(GLfloat) * 2));
-	setBindAttribFragment("vertexColor");
-	
 	//Transform
 	setTranslate(glm::vec3(pos.x + r, pos.y + r, 0.0f));	//平行移動
 
 	//Uniform		
-	setUniformMatrix4fv("uTranslate", translate);
-	setUniformMatrix4fv("uRotate", rotate);
-	setUniformMatrix4fv("uScale", scale);
-	setUniformMatrix4fv("uViewProjection", glm::ortho(0.0f, windowContext->getSize().x, windowContext->getSize().y, 0.0f, -1.0f, 1.0f));
+	setUniformMatrix4fv("uTranslate", translate);		//平行移動
+	setUniformMatrix4fv("uRotate", rotate);				//回転
+	setUniformMatrix4fv("uScale", scale);				//スケール
+	setUniformMatrix4fv("uViewProjection", glm::ortho(0.0f, windowContext->getSize().x, windowContext->getSize().y, 0.0f, -1.0f, 1.0f));	//ビュープロジェクション
 
-	glDrawArrays(GL_TRIANGLE_FAN, 0, num);
+	glBindVertexArray(vao);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+	glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei)vertex.size());
+
 	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	if (isDefaultShader == true) 
-	{
-		setDisable();
-	}
-
+	if (isDefaultShader == true) { setDisable(); }
 }
+
+
 
 // ##################################### デストラクタ ##################################### 
 FrameWork::Circle::~Circle()
