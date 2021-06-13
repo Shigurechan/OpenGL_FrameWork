@@ -61,7 +61,6 @@ void FrameWork::Rectangle::Draw(glm::vec2 start,glm::vec2 end,float r,glm::vec2 
 	{
 		setVertexALLColor(color);	//’¸“_F‚ğİ’è
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(VertexUV) * 6, rectangleVertex);
-
 	}
 
 	//Transform

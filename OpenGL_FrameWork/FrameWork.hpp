@@ -1,6 +1,5 @@
 #ifndef ___FRAMEWORK_HPP_
 #define ___FRAMEWORK_HPP_
-
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -23,8 +22,8 @@
 
 namespace FrameWork
 {
-	bool Init();
-	void setVersion(int a,int b);
+	bool Init();					//‰Šú‰»
+	void setVersion(int a,int b);	//ƒo[ƒWƒ‡ƒ“‚ğİ’è
 }
 #endif
 

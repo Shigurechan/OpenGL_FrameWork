@@ -14,6 +14,7 @@ namespace FrameWork
 
 	class Camera
 	{
+
 	public:
 
 		Camera(std::shared_ptr<Window> w);	//コンストラクタ
@@ -32,6 +33,7 @@ namespace FrameWork
 		glm::mat4 getProjection_2D();		//2Dカメラ
 
 	private:
+
 		glm::vec3 vecPosition;	//座標
 		glm::vec3 vecLook;		//向き(視線)
 		glm::mat4 view;			//ビュー行列

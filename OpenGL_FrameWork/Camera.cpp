@@ -5,7 +5,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Window.hpp"
 
-
 // ##################################### コンストラクタ ##################################### 
 FrameWork::Camera::Camera(std::shared_ptr<Window> w)
 {

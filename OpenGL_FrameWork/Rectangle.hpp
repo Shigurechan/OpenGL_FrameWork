@@ -14,12 +14,14 @@ namespace FrameWork
 
 	class Rectangle : protected FrameWork::Transform_2D, public Shader
 	{
+
 	public:
 
 		Rectangle(std::shared_ptr<Window> w, const char* vert = NULL, const char* frag = NULL);	//コンストラクタ
 		~Rectangle();																			//デストラクタ
 
 		void Draw(glm::vec2 start, glm::vec2 end, float r, glm::vec2 s, glm::vec4 color);	// 描画		
+
 	private:
 
 		//塗りつぶし矩形
@@ -37,10 +39,7 @@ namespace FrameWork
 		void setVertexALLColor(glm::vec4 color);			//頂点カラーを全部設定
 		void setVertexColor(int vertNum, glm::vec4 color);	//頂点カラーを一つ設定
 		std::shared_ptr<Window> windowContext;				//ウインドウコンテキスト
-
 	};
 }
-
-
 #endif
 

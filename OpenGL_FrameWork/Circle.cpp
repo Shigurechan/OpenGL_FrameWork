@@ -3,7 +3,6 @@
 #include "Window.hpp"
 #include "FrameWork.hpp"
 
-
 // ##################################### コンストラクタ ##################################### 
 FrameWork::Circle::Circle(std::shared_ptr<Window> w,const char* vert, const char* frag) : Transform_2D(),Shader()
 {
@@ -44,7 +43,6 @@ FrameWork::Circle::Circle(std::shared_ptr<Window> w,const char* vert, const char
 	glBufferData(GL_ARRAY_BUFFER, vertex.size() * sizeof(VertexColor), vertex.data(), GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(attrib, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(sizeof(GLfloat) * 2));
 	setBindAttribVertex("vertexColor");
-
 	
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -60,7 +58,6 @@ void FrameWork::Circle::Draw(glm::vec2 pos, int num, float r,glm::vec4 color)
 	
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
 
 	if (vertex.size() != num)
 	{
@@ -84,7 +81,6 @@ void FrameWork::Circle::Draw(glm::vec2 pos, int num, float r,glm::vec4 color)
 		glBufferSubData(GL_ARRAY_BUFFER, 0, vertex.size() * sizeof(VertexColor), vertex.data());
 	}
 
-
 	//Transform
 	setTranslate(glm::vec3(pos.x + r, pos.y + r, 0.0f));	//平行移動
 
@@ -104,8 +100,6 @@ void FrameWork::Circle::Draw(glm::vec2 pos, int num, float r,glm::vec4 color)
 
 	if (isDefaultShader == true) { setDisable(); }
 }
-
-
 
 // ##################################### デストラクタ ##################################### 
 FrameWork::Circle::~Circle()

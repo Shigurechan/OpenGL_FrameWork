@@ -14,7 +14,6 @@
 
 namespace FrameWork
 {
-
     // ##################################### 乱数 ##################################### 
 	int GetRandom(int start, int end)
 	{
@@ -69,13 +68,13 @@ namespace FrameWork
         //初期化 
         if (FT_Init_FreeType(&ft) != 0)
         {
-            std::cout << "ERROR: FREETYPE: Could not init FreeType Library" << std::endl;
+            std::cerr << "ERROR: FREETYPE: Could not init FreeType Library" << std::endl;
         }
 
         //フェイス作成　フォントはメイリオ
         if (FT_New_Face(ft, "C:\\Windows\\Fonts\\meiryo.ttc", 0, &face) != 0)
         {
-            std::cout << "ERROR: FREETYPE: Failed to load font" << std::endl;
+            std::cerr << "ERROR: FREETYPE: Failed to load font" << std::endl;
         }
 
         
@@ -116,7 +115,6 @@ namespace FrameWork
         {
             f = (int)mbrtowc(txt + i, &text[j], (size_t)MB_CUR_MAX, nullptr);
         }
-
 
         //文字描画
         for (int i = 0; txt[i] != L'\0'; i++)
@@ -196,10 +194,5 @@ namespace FrameWork
 
         glDeleteVertexArrays(1, &vao);
         glDeleteBuffers(1, &vbo);
-
 	}
-
-
-
-
 }

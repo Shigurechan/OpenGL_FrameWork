@@ -42,8 +42,7 @@ void FrameWork::Transform_2D::setSizeScale(glm::vec2 s)
 // ##################################### 画像サイズを取得 ##################################### 
 glm::vec2 FrameWork::Transform_2D::getSizeScale()
 {
-	return size;
-	
+	return size;	
 }
 
 // ##################################### デストラクタ ##################################### 

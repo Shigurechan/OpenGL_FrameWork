@@ -19,7 +19,7 @@ FrameWork::Text::Text(std::shared_ptr<Window> w, const char* vert, const char* f
         frag = "Shader/2D/BasicText_2D.frag";
         if (LoadShader(vert, frag) == false)
         {
-            std::cout << "シェーダープログラムを作成できません。" << std::endl;
+            std::cerr << "シェーダープログラムを作成できません。" << std::endl;
         }
     }
     else 
@@ -45,13 +45,13 @@ FrameWork::Text::Text(std::shared_ptr<Window> w, const char* vert, const char* f
     //初期化 
     if (FT_Init_FreeType(&ft) != 0)
     {
-        std::cout << "ERROR: FREETYPE: Could not init FreeType Library"<<std::endl;
+        std::cerr << "ERROR: FREETYPE: Could not init FreeType Library"<<std::endl;
     }
 
     //フェイス作成　フォントはメイリオ
     if (FT_New_Face(ft, "C:\\Windows\\Fonts\\meiryo.ttc", 0, &face) != 0)
     {
-        std::cout << "ERROR: FREETYPE: Failed to load font" << std::endl;
+        std::cerr << "ERROR: FREETYPE: Failed to load font" << std::endl;
     }
     
     charSize = 24;  //文字サイズを指定

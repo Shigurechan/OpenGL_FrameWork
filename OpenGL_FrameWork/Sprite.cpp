@@ -2,16 +2,13 @@
 
 #include <iostream>
 #include <fstream>
-
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_Transform.hpp"
 #include "glm/gtx/Transform.hpp"
-
 #include "Texture.hpp"
 #include "Shader.hpp"
 #include "Window.hpp"
 #include "stb/stb_image.h"
-
 
 // ##################################### コンストラクタ ##################################### 
 FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char* frag) : Transform_2D(),Shader()
@@ -61,11 +58,8 @@ FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char*
 	glVertexAttribPointer(attrib, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), (GLvoid*)(sizeof(GLfloat) * 2));
 	setBindAttribVertex("vertexUV");
 
-
-
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
 
 	//アルファブレンド有効
 	glEnable(GL_BLEND);
@@ -76,11 +70,8 @@ FrameWork::Sprite::Sprite(std::shared_ptr<Window> w,const char* vert,const char*
 
 // ##################################### テクスチャを設定 ##################################### 
 void FrameWork::Sprite::setTexture(TextureData tex)
-{
-	
-	textureID.push_back(tex);	//テクスチャーIDに追加
-
-	
+{	
+	textureID.push_back(tex);				//テクスチャーIDに追加	
 	glGenTextures(1, &textureID.back().ID);	//テクスチャIDの生成
 
 	//バインド
@@ -130,7 +121,6 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-
 	// ####################### 頂点属性のUVデータを更新  #######################	
 	//UVサイズからピクセルサイズを算出
 	const float sizeX = 1.0f / (float)textureID.at(texNum).size.x;
@@ -171,8 +161,7 @@ void FrameWork::Sprite::DrawGraph(glm::vec2 pos, unsigned char texNum,float r,gl
 	setUniformMatrix4fv("uScale", scale);
 	setUniformMatrix4fv("uViewProjection", glm::ortho(0.0f, windowContext->getSize().x, windowContext->getSize().y, 0.0f, -1.0f, 1.0f));
 
-	//バインド＆描画
-	
+	//バインド＆描画	
 	glBindTexture(GL_TEXTURE_2D, textureID.at(texNum).ID);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 
@@ -190,12 +179,12 @@ FrameWork::Sprite::~Sprite()
 {
 	for (int i = 0; i < textureID.size(); i++)
 	{
-		glDeleteTextures(1,&textureID.at(i).ID);		//
-		stbi_image_free(textureID.at(i).fileData);		//
-		textureID.at(i).fileData = NULL;				//
+		glDeleteTextures(1,&textureID.at(i).ID);		//テクスチャIDを解放
+		stbi_image_free(textureID.at(i).fileData);		//テクスチャを開放
+		textureID.at(i).fileData = NULL;				//テクスチャポインタをNULL
 	}
 
-	glDeleteVertexArrays(1, &vao);	//
-	glDeleteBuffers(1, &vbo);		//
+	glDeleteVertexArrays(1, &vao);
+	glDeleteBuffers(1, &vbo);
 }
 

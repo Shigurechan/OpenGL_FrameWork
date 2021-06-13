@@ -1,6 +1,5 @@
 #ifndef ___TEXT_HPP_
 #define ___TEXT_HPP_
-
 #include "Transform_2D.hpp"
 #include "Shader.hpp"
 #include "glm/glm.hpp"
@@ -19,6 +18,7 @@ namespace FrameWork
 
     class Text : protected FrameWork::Transform_2D, public Shader
     {
+
     public:
         Text(std::shared_ptr<Window> w, const char* vert = NULL, const char* frag = NULL);  //コンストラクタ
         ~Text();	                                                                        //デストラクタ
@@ -41,7 +41,6 @@ namespace FrameWork
         //FreeType
         FT_Library ft;  //freetype
         FT_Face face;   //フェイス
-
     };
 }
 #endif

@@ -15,6 +15,7 @@ namespace FrameWork
 	class Animation
 	{
 	public:
+
 		Animation(std::shared_ptr<Window> w, int num);	//コンストラクタ
 		~Animation();									//デストラクタ
 
@@ -24,15 +25,15 @@ namespace FrameWork
 
 	private:
 
-		std::shared_ptr<Window> windowContext;				//ウインドウコンテキスト
-		int clipNum;										//クリップの数
-		int next;											//次のクリップまでのフレーム
-		int nowClip;										//現在のクリップ
-		int speed;											//フレーム速度を指定
-		bool isOnce;										//一回再生したかどうか？
-		bool flagOnce;										//切り替えフレームを設定一回だけの場合の時
-		bool isFirst;										//最初のフレーム
-		bool flag;											//切り替えフレームを設定
+		std::shared_ptr<Window> windowContext;	//ウインドウコンテキスト
+		int clipNum;							//クリップの数
+		int next;								//次のクリップまでのフレーム
+		int nowClip;							//現在のクリップ
+		int speed;								//フレーム速度を指定
+		bool isOnce;							//一回再生したかどうか？
+		bool flagOnce;							//切り替えフレームを設定一回だけの場合の時
+		bool isFirst;							//最初のフレーム
+		bool flag;								//切り替えフレームを設定
 	};
 };
 #endif

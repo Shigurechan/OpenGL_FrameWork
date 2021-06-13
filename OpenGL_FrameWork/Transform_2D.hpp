@@ -17,6 +17,7 @@ namespace FrameWork
 
 	class Transform_2D
 	{
+
 	public:
 
 		Transform_2D();		//コンストラクタ
@@ -67,5 +68,4 @@ namespace FrameWork
 		glm::vec2 size;			//画像サイズ
 	};
 }
-
 #endif

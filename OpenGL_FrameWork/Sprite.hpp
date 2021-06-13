@@ -18,10 +18,11 @@ namespace FrameWork
 
 	class Sprite : protected FrameWork::Transform_2D, public Shader
 	{
+
 	public:
 
-		Sprite(std::shared_ptr<Window> w, const char* vert = NULL, const char* frag = NULL);		//コンストラクタ
-		~Sprite();										//デストラクタ
+		Sprite(std::shared_ptr<Window> w, const char* vert = NULL, const char* frag = NULL);	//コンストラクタ
+		~Sprite();																				//デストラクタ
 
 		void DrawGraph(glm::vec2 pos, unsigned char texNum,float r, glm::vec2 s,glm::vec2 startSize, glm::vec2 endSize);	//描画
 		glm::vec2 getTextureSize(unsigned char id);																			//テクスチャサイズを取得

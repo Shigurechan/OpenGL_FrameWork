@@ -21,17 +21,11 @@ uniform mat4 uTranslate;	//平行移動
 
 uniform mat4 uViewProjection;	//ビュープロジェクション行列
 
-
-
-
 void main()
 {
 	vec4 vertex = vec4(vertexPosition,0.0,1.0);		//頂点座標
 	mat4 model = uTranslate * uRotate * uScale;		//モデル行列
 	gl_Position = (uViewProjection * model) * vertex;
 	
-	
-
-
 	vUV = vertexUV;	//UV座標
 }

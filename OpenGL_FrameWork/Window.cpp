@@ -1,4 +1,5 @@
 #include "Window.hpp"
+
 #include <chrono>
 #include <thread>
 
@@ -6,8 +7,8 @@
 FrameWork::Window::Window(int width, int height, const char* title) : window(glfwCreateWindow(width, height, title, NULL, NULL))	
 {
 	//入力管理
-	std::fill(std::begin(keyBoard), std::end(keyBoard), 0);				//キーボード入力配列を初期化
-	std::fill(std::begin(mouseButton), std::end(mouseButton), 0);		//マウス入力配列を初期化
+	std::fill(std::begin(keyBoard), std::end(keyBoard), 0);			//キーボード入力配列を初期化
+	std::fill(std::begin(mouseButton), std::end(mouseButton), 0);	//マウス入力配列を初期化
 	mouseWheel = 0;	//マウスホイール
 	inputKey = 0;	//文字入力
 
@@ -15,9 +16,6 @@ FrameWork::Window::Window(int width, int height, const char* title) : window(glf
 	count = 0;		//現在のフレーム
 	startCount = 0;	//最初の時間
 	wait = 0;		//待機時間
-
-
-
 
 	//コンテキストの作成に失敗
 	if (window == NULL)
@@ -28,7 +26,6 @@ FrameWork::Window::Window(int width, int height, const char* title) : window(glf
 
 	glfwMakeContextCurrent(window);	//コンテキストを作成
 	glfwSwapInterval(1);			//垂直同期
-	//glewExperimental = GL_TRUE;		//
 
 	if (glewInit() != GLEW_OK)
 	{
@@ -44,7 +41,7 @@ FrameWork::Window::Window(int width, int height, const char* title) : window(glf
 	glfwSetWindowSizeCallback(window, Resize);		//ウインドウサイズを変更する時に呼び出す処理
 	glfwSetDropCallback(window,DragAndDrop);		//ドラック＆ドロップ
 	glfwSetScrollCallback(window,MouseScroll);		//マウスのホイール
-	//glfwSetCharCallback(window,KeyInputString);	//キー入力(文字入力)
+	//glfwSetCharCallback(window,KeyInputString);	//キー入力(文字入力)　未実装
 
 	Resize(window, width, height);	//リサイズ
 }
@@ -128,8 +125,6 @@ int FrameWork::Window::getMouseButton(int mouse )
 		mouseButton[mouse] = 0;
 	}
 
-
-
 	return mouseButton[mouse];
 }
 
@@ -204,7 +199,7 @@ FrameWork::Window::operator bool()
 	GLenum err;
 	while ((err = glGetError()) != GL_NO_ERROR)
 	{
-		std::cout << "glGetError(): 0x" << std::hex << err << std::endl;
+		std::cerr << "glGetError(): 0x" << std::hex << err << std::endl;
 	}
 #endif
 	

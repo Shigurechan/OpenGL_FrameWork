@@ -20,8 +20,5 @@ void main()
 	vec4 vertex = vec4(vertexPosition.x,vertexPosition.y,0.0,1.0);		//í∏ì_ç¿ïW
 	gl_Position =  (uViewProjection * vertex);
 	
-	
-
-
 	texCoord = vertexPosition.zw;
 }

@@ -4,7 +4,6 @@
 #include <vector>
 #include "Shader.hpp"
 #include "Transform_2D.hpp"
-
 /*#########################################################################
 # 　円描画クラス
 
@@ -17,10 +16,11 @@ namespace FrameWork
 
 	class Circle : protected FrameWork::Transform_2D, public FrameWork::Shader
 	{
+
 	public:
 
-		Circle(std::shared_ptr<Window> w, const char* vert = NULL, const char* frag = NULL);		//コンストラクタ
-		~Circle();								//デストラクタ
+		Circle(std::shared_ptr<Window> w, const char* vert = NULL, const char* frag = NULL);	//コンストラクタ
+		~Circle();																				//デストラクタ
 
 		void Draw(glm::vec2 pos, int num, float r, glm::vec4 color);	//描画
 

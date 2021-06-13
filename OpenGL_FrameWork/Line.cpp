@@ -49,7 +49,6 @@ FrameWork::Line::Line(std::shared_ptr<Window> w, const char* vert, const char* f
 	//アルファブレンド有効
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 }
 
 // ##################################### 描画 ##################################### 

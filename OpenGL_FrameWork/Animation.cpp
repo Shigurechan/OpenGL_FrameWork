@@ -18,7 +18,6 @@ FrameWork::Animation::Animation(std::shared_ptr<Window> w,int num)
 // ##################################### アニメーションをするフレーム数を指定 ##################################### 
 int FrameWork::Animation::getClip(int spd)
 {
-
 	if (flag == false)
 	{
 		if (isFirst == false)
@@ -38,8 +37,6 @@ int FrameWork::Animation::getClip(int spd)
 
 		flag = true;
 	}
-
-	//std::cout << "next: " << next << std::endl;
 
 	if (next == windowContext->getFrame())
 	{
@@ -75,6 +72,7 @@ bool FrameWork::Animation::getOnceClip(int spd, int& clip)
 		{
 			next = next - windowContext->getFrame();
 		}
+
 		flagOnce = true;
 	}
 

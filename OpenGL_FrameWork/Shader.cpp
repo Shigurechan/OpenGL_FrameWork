@@ -4,7 +4,6 @@
 #include <fstream>
 #include <string>
 #include <vector>
-
 #include <glm/gtc/type_ptr.hpp>
 
 // ##################################### コンストラクタ ##################################### 
@@ -34,8 +33,6 @@ bool FrameWork::Shader::LoadShader(const char* vert, const char* frag)
 	return true;
 }
 
-
-
 // ##################################### プログラムオブジェクトをロード ##################################### 
 GLuint FrameWork::Shader::loadProgram(const char* vert, const char* frag)
 {
@@ -54,7 +51,6 @@ GLuint FrameWork::Shader::loadProgram(const char* vert, const char* frag)
 		return 0;
 	}
 }
-
 
 // ##################################### シェーダーファイルを読み込む ##################################### 
 bool FrameWork::Shader::ReadShaderSource(const char* name, std::vector<GLchar>& buffer)
@@ -117,31 +113,23 @@ GLboolean FrameWork::Shader::CompileInfoLog(GLuint shader,const char* str)
 	return (GLboolean)status;
 }
 
-
 // ##################################### プログラムオブジェクト作成 ##################################### 
 GLuint FrameWork::Shader::CreateProgram(const char* vsrc, const char* fsrc)
 {
 	const GLuint program = glCreateProgram();	//シェーダープログラムを作成
-	
-	//std::cout << program << std::endl;
 
 	if (vsrc != NULL)
 	{
 		const GLuint vobj = glCreateShader(GL_VERTEX_SHADER);
 		glShaderSource(vobj, 1, &vsrc, NULL);
 		glCompileShader(vobj);
-
-
-		//std::cerr << "頂点シェーダー　コンパイルエラー" << std::endl << std::endl;
 		CompileInfoLog(vobj, vsrc);
-
 		glAttachShader(program, vobj);
 		glDeleteShader(vobj);
-
 	}
 	else 
 	{
-		std::cout << "頂点シェーダー読み込み失敗" << std::endl;
+		std::cerr << "頂点シェーダー読み込み失敗" << std::endl;
 	}
 
 	if (fsrc != NULL)
@@ -149,17 +137,13 @@ GLuint FrameWork::Shader::CreateProgram(const char* vsrc, const char* fsrc)
 		const GLuint fobj = glCreateShader(GL_FRAGMENT_SHADER);
 		glShaderSource(fobj, 1, &fsrc, NULL);
 		glCompileShader(fobj);
-
-		//std::cerr << "フラグメントシェーダー　コンパイルエラー" << std::endl << std::endl;
 		CompileInfoLog(fobj, fsrc);
-
 		glAttachShader(program, fobj);
 		glDeleteShader(fobj);
 	}
 	else 
 	{
-		std::cout << "フラグメントシェーダー読み込み失敗" << std::endl;
-
+		std::cerr << "フラグメントシェーダー読み込み失敗" << std::endl;
 	}
 
 	glLinkProgram(program);		//リンクプログラム
@@ -176,8 +160,7 @@ GLboolean FrameWork::Shader::ProgramInfoLog(GLuint program)
 
 	if (bufSize > 1) 
 	{
-		std::vector<GLchar> infoLog(bufSize);
-	
+		std::vector<GLchar> infoLog(bufSize);	
 		GLsizei length;
 		glGetProgramInfoLog(program, bufSize, &length, &infoLog[0]);
 		std::cerr<<"Program Info Log: "<< infoLog.data() <<std::endl;
@@ -195,7 +178,6 @@ GLint FrameWork::Shader::getAttribLocation(const char* str)
 {
 	return glGetAttribLocation(program,str);
 }
-
 
 // ##################################### 頂点シェーダーに属性変数を関連ずける ##################################### 
 void FrameWork::Shader::setBindAttribVertex(const char* str)
@@ -241,7 +223,7 @@ void FrameWork::Shader::setDisable()
 	glUseProgram(0);
 }
 
-// ##################################### Uniform を設定 ##################################### 
+// ##################################### Uniform 設定 ##################################### 
   
 //vec1
 void FrameWork::Shader::setUniform1f(const char* name, const float vec)
@@ -297,7 +279,6 @@ void FrameWork::Shader::setUniformMatrix4fv(const char* name, const glm::mat4 m)
 	const GLuint object = glGetUniformLocation(program, name);
 	if (object == -1) { assert(0); }	//エラー処理
 	glUniformMatrix4fv(object, 1, false, glm::value_ptr(m));
-
 }
 
 // ##################################### デストラクタ ##################################### 

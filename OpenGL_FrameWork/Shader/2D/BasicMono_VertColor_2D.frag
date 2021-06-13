@@ -6,7 +6,6 @@
 // ###################### “ü—Í ###################### 
 layout(location = 2) in vec4 vfragment;	
 
-
 //o—Í
 out vec4 fragment;
 

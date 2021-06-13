@@ -17,6 +17,7 @@ namespace FrameWork
 {
 	class Window
 	{
+
 	public:
 
 		Window(int width = 640, int height = 480, const char* title = "Hello!");	//コンストラクタ
@@ -37,7 +38,6 @@ namespace FrameWork
 		int getMouseButton(int mouse);			//マウスボタンが押されたかどうか？
 		double getMouseScroll();				//マウススクロールを取得
 		unsigned int InputKeyBoard();			//キー入力(文字入力)
-
 
 		//イベント処理
 		static void Resize(GLFWwindow* const win, int width, int height);			//サイズ変更

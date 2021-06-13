@@ -1,6 +1,5 @@
 #include "FrameWork.hpp"
 
-
 /*NOTE
 * 
 * ウインドウコンテキストの宣言は初期化の後でバージョン設定よりも前に置く
@@ -25,7 +24,6 @@ int main()
 	return 0;
 }
 */
-
 
 namespace FrameWork
 {

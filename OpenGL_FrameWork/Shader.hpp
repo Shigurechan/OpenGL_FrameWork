@@ -16,6 +16,7 @@ namespace FrameWork
 	{
 
 	public:
+
 		Shader();	//コンストラクタ
 		~Shader();	//デストラクタ
 
@@ -48,7 +49,6 @@ namespace FrameWork
 		GLuint loadProgram(const char* vert, const char* frag);					//プログラムをオブジェクトをロード
 
 		GLuint program;	//プログラムオブジェクトシェーダー
-
 	};
 }
 #endif
