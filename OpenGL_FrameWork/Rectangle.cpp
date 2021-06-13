@@ -19,8 +19,6 @@ FrameWork::Rectangle::Rectangle(std::shared_ptr<Window> w, const char* vert, con
 		LoadShader(vert, frag);
 		isDefaultShader = false;
 	}
-
-	//頂点情報
 	
 	//vao
 	glGenVertexArrays(1, &vao);
@@ -44,7 +42,6 @@ FrameWork::Rectangle::Rectangle(std::shared_ptr<Window> w, const char* vert, con
 	glVertexAttribPointer(attrib, 4, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(sizeof(GLfloat) * 2));
 	setBindAttribVertex("vertexColor");
 
-
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -60,13 +57,12 @@ void FrameWork::Rectangle::Draw(glm::vec2 start,glm::vec2 end,float r,glm::vec2 
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-
-
 	if (isDefaultShader == true)
 	{
 		setVertexALLColor(color);	//頂点色を設定
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(VertexUV) * 6, rectangleVertex);
+
 	}
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(VertexUV) * 6, rectangleVertex);
 
 	//Transform
 	setSizeScale(glm::vec2((end.x - start.x), (end.y - start.y)));			//サイズ	
@@ -79,8 +75,6 @@ void FrameWork::Rectangle::Draw(glm::vec2 start,glm::vec2 end,float r,glm::vec2 
 	setUniformMatrix4fv("uRotate", rotate);
 	setUniformMatrix4fv("uScale", scale);
 	setUniformMatrix4fv("uViewProjection", glm::ortho(0.0f, windowContext->getSize().x, windowContext->getSize().y, 0.0f, -1.0f, 1.0f));
-
-
 	
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 
@@ -131,5 +125,3 @@ FrameWork::Rectangle::~Rectangle()
 {
 
 }
-
-
