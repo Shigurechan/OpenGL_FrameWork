@@ -11,11 +11,11 @@ layout(location = 2 ) in vec2 texCoord;
 out vec4 color;
 
 // ###################### Unifrom ###################### 
-uniform sampler2D text;
-uniform vec3 textColor;
+uniform sampler2D text;     //文字テクスチャ
+uniform vec4 uTextColor;    //色
 
 void main()
 {    
     vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, texCoord).r);
-    color = vec4(textColor,1.0) * sampled;
+    color = uTextColor * sampled;
 }  

@@ -17,7 +17,7 @@ namespace FrameWork
 
 	public:
 
-		Camera(std::shared_ptr<Window> w);	//コンストラクタ
+		Camera();	//コンストラクタ
 		~Camera();							//デストラクタ
 
 		// ###################### 設定　関係 ###################### 
@@ -39,7 +39,6 @@ namespace FrameWork
 		glm::mat4 view;			//ビュー行列
 		glm::mat4 projection;	//透視射形行列
 
-		std::shared_ptr<Window> windowContext;	//ウインドウコンテキスト
 	};
 }
 #endif

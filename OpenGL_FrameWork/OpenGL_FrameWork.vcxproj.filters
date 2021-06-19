@@ -54,6 +54,9 @@
     <ClInclude Include="Animation.hpp">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Simple_Draw.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp">
@@ -95,6 +98,9 @@
     <ClCompile Include="Animation.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Simple_Draw.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\2D\BasicText_2D.vert">
@@ -110,12 +116,6 @@
       <Filter>リソース ファイル</Filter>
     </None>
     <None Include="Shader\2D\BasicMono_2D.vert">
-      <Filter>リソース ファイル</Filter>
-    </None>
-    <None Include="Shader\2D\BasicMono_VertColor_2D.frag">
-      <Filter>リソース ファイル</Filter>
-    </None>
-    <None Include="Shader\2D\BasicMono_VertColor_2D.vert">
       <Filter>リソース ファイル</Filter>
     </None>
     <None Include="Shader\2D\BasicText_2D.frag">

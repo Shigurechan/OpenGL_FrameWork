@@ -8,6 +8,7 @@
 #include <glfw/include/GLFW/glfw3.h>
 
 #include "Window.hpp"
+#include "Simple_Draw.hpp"
 #include "Sprite.hpp"
 #include "Rectangle.hpp"
 #include "Camera.hpp"
@@ -20,10 +21,13 @@
 
 #define PI ((float)3.14159265359f) //PI
 
+
+
 namespace FrameWork
 {
 	bool Init();					//初期化
 	void setVersion(int a,int b);	//バージョンを設定
+	std::shared_ptr<FrameWork::Window> getWindowContext();	//ウインドウコンテキストを取得
 }
 #endif
 

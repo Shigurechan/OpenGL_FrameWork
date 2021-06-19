@@ -1,8 +1,11 @@
 #include "Transform_2D.hpp"
+#include "Shader.hpp"
 
 // ##################################### コンストラクタ ##################################### 
 FrameWork::Transform_2D::Transform_2D()
 {
+	shader = std::make_unique<FrameWork::Shader>();
+
 	size = glm::vec2(0,0);
 	vao = 0;
 	vbo = 0;

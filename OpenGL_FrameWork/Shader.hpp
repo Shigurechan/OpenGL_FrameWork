@@ -20,12 +20,12 @@ namespace FrameWork
 		Shader();	//コンストラクタ
 		~Shader();	//デストラクタ
 
-		bool LoadShader(const char* vert, const char* frag);	//シェーダー読み込み
+		bool Load(const char* vert, const char* frag);	//シェーダー読み込み
 
 		void setEnable();	//有効
 		void setDisable();	//無効
 
-		void setBindAttribVertex(const char* str);		//頂点シェーダーに属性変数を関連ずける
+		void setBindAttribLocation(const char* str);	//頂点シェーダーに属性変数を関連ずける
 		void setBindAttribFragment(const char* str);	//フラグメントシェーダーに属性変数を関連ずける
 		GLint getAttribLocation(const char* str);		//locationを取得
 
@@ -48,7 +48,7 @@ namespace FrameWork
 		bool ReadShaderSource(const char* name, std::vector<GLchar>& buffer);	//ソースファイルを読み込み
 		GLuint loadProgram(const char* vert, const char* frag);					//プログラムをオブジェクトをロード
 
-		GLuint program;	//プログラムオブジェクトシェーダー
+		GLuint program;	//プログラムオブジェクト
 	};
 }
 #endif

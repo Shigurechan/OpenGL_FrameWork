@@ -28,7 +28,7 @@ namespace FrameWork
 		const int getKeyInput(int input);	//キー入力
 
 		//フレーム管理
-		void FrameUpdate();	//待機フレームを計算
+		void FrameUpdate(glm::vec4 color);	//待機フレームを計算
 		void Wait();		//待機
 		int getFrame();		//フレームを取得 60まで
 

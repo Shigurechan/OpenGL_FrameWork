@@ -36,6 +36,7 @@ FrameWork::Window::Window(int width, int height, const char* title) : window(glf
 	atexit(glfwTerminate);	//プログラム終了時の処理を登録
 	glfwSwapInterval(1);	//垂直同期
 
+
 	//イベント処理
 	glfwSetWindowUserPointer(window, this);			//このインスタンスのthis
 	glfwSetWindowSizeCallback(window, Resize);		//ウインドウサイズを変更する時に呼び出す処理
@@ -130,8 +131,16 @@ int FrameWork::Window::getMouseButton(int mouse )
 
 
 // ##################################### 待機フレームを計算 ##################################### 
-void FrameWork::Window::FrameUpdate()
+void FrameWork::Window::FrameUpdate(glm::vec4 color)
 {
+	float c = 1.0f / 255.0f;
+	glClearColor(color.x * c, color.y * c, color.z * c, color.w * c);									//カラーバッファのクリア色
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_ACCUM_BUFFER_BIT);	//フレームバッファを初期化
+
+	glEnable(GL_BLEND);	//アルファブレンド有効
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	//ブレンドタイプ
+
+	//フレームレートを制御する
 	if (count == FRAME_RATE)
 	{
 		int t = (int)(1000 - ((glfwGetTime() * 1000.0) - startCount));

@@ -4,12 +4,11 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Window.hpp"
+#include "FrameWork.hpp"
 
 // ##################################### コンストラクタ ##################################### 
-FrameWork::Camera::Camera(std::shared_ptr<Window> w)
+FrameWork::Camera::Camera()
 {
-	windowContext = w;	//ウインドウコンテキスト
-
 	//ビュー
 	vecPosition = glm::vec3(0, 0, 1);	//座標
 	vecLook = glm::vec3(0, 0, -1);		//向き
@@ -53,7 +52,7 @@ glm::mat4 FrameWork::Camera::getViewProjection()
 // ##################################### ２D ビュー行列を取得 正射形　##################################### 
 glm::mat4 FrameWork::Camera::getProjection_2D()
 {
-	return glm::ortho(0.0f, windowContext->getSize().x, windowContext->getSize().y, 0.0f, -1.0f, 1.0f);
+	return glm::ortho(0.0f, FrameWork::getWindowContext()->getSize().x, FrameWork::getWindowContext()->getSize().y, 0.0f, -1.0f, 1.0f);
 }
 
 // ###################### デストラクタ ###################### 

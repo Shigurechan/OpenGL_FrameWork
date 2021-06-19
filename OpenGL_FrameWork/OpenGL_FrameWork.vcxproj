@@ -151,6 +151,7 @@
     <ClInclude Include="Help.hpp" />
     <ClInclude Include="Rectangle.hpp" />
     <ClInclude Include="Shader.hpp" />
+    <ClInclude Include="Simple_Draw.hpp" />
     <ClInclude Include="Sprite.hpp" />
     <ClInclude Include="Text.hpp" />
     <ClInclude Include="Texture.hpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="Help.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Simple_Draw.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -175,8 +177,6 @@
   <ItemGroup>
     <None Include="Shader\2D\BasicMono_2D.frag" />
     <None Include="Shader\2D\BasicMono_2D.vert" />
-    <None Include="Shader\2D\BasicMono_VertColor_2D.frag" />
-    <None Include="Shader\2D\BasicMono_VertColor_2D.vert" />
     <None Include="Shader\2D\BasicTexture_2D.frag" />
     <None Include="Shader\2D\BasicTexture_2D.vert" />
     <None Include="Shader\2D\BasicText_2D.frag" />

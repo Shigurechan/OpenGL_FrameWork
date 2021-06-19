@@ -16,8 +16,8 @@ namespace FrameWork
 	{
 	public:
 
-		Animation(std::shared_ptr<Window> w, int num);	//コンストラクタ
-		~Animation();									//デストラクタ
+		Animation(int num);	//コンストラクタ
+		~Animation();		//デストラクタ
 
 		int getClip(int spd);						//アニメーションをするフレーム数を指定
 		bool getOnceClip(int spd,int &clip);		//一回だけ再生されるアニメーション
@@ -25,7 +25,6 @@ namespace FrameWork
 
 	private:
 
-		std::shared_ptr<Window> windowContext;	//ウインドウコンテキスト
 		int clipNum;							//クリップの数
 		int next;								//次のクリップまでのフレーム
 		int nowClip;							//現在のクリップ

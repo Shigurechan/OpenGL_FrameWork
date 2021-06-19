@@ -21,4 +21,5 @@ void main()
 	gl_Position =  (uViewProjection * vertex);
 	
 	texCoord = vertexPosition.zw;
+
 }

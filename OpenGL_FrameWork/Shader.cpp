@@ -13,7 +13,7 @@ FrameWork::Shader::Shader()
 }
 
 // ##################################### シェーダーをロード ##################################### 
-bool FrameWork::Shader::LoadShader(const char* vert, const char* frag)
+bool FrameWork::Shader::Load(const char* vert, const char* frag)
 {
 	if (program != 0)
 	{
@@ -180,7 +180,7 @@ GLint FrameWork::Shader::getAttribLocation(const char* str)
 }
 
 // ##################################### 頂点シェーダーに属性変数を関連ずける ##################################### 
-void FrameWork::Shader::setBindAttribVertex(const char* str)
+void FrameWork::Shader::setBindAttribLocation(const char* str)
 {
 	GLint n = glGetAttribLocation(program, str);
 

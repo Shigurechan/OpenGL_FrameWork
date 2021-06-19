@@ -1,10 +1,13 @@
 #ifndef ___Transform_2D_HPP_
 #define ___Transform_2D_HPP_
 #include <iostream>
+//#include "FrameWork.hpp"
+
 #include "glm/glm.hpp"
 #include <glm/gtc/matrix_Transform.hpp>
 #include <glm/gtx/Transform.hpp>
 #include <glew/include/GL/glew.h>
+
 /*#########################################################################
 # トランスフォームクラス: Actorクラスを継承
 
@@ -14,6 +17,7 @@
 namespace FrameWork
 {
 	class Window;
+	class Shader;
 
 	class Transform_2D
 	{
@@ -53,8 +57,8 @@ namespace FrameWork
 			GLfloat color[4];
 		};
 
-		GLuint vao;							//VertexArrayObject
-		GLuint vbo;							//VertexBufferObject	
+		GLuint vao;	//VertexArrayObject
+		GLuint vbo;	//VertexBufferObject	
 
 		bool isDefaultShader;	//既定のシェーダーファイルが選ばれたかどうか？
 
@@ -62,6 +66,8 @@ namespace FrameWork
 		glm::mat4 scale;		//拡大縮小
 		glm::mat4 rotate;		//回転
 		glm::mat4 translate;	//平行移動
+
+		std::unique_ptr<FrameWork::Shader> shader;
 
 	private:
 

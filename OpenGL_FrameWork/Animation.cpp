@@ -1,9 +1,9 @@
 #include "Animation.hpp"
+#include "FrameWork.hpp"
 
 // ##################################### コンストラクタ ##################################### 
-FrameWork::Animation::Animation(std::shared_ptr<Window> w,int num)
+FrameWork::Animation::Animation(int num)
 {
-	windowContext = w;									//ウインドウコンテキスト
 	clipNum = num;
 	next = 0;											//次のクリップまでのフレーム
 	nowClip = 0;										//現在のクリップ
@@ -22,23 +22,23 @@ int FrameWork::Animation::getClip(int spd)
 	{
 		if (isFirst == false)
 		{
-			next = windowContext->getFrame() + spd;
+			next = FrameWork::getWindowContext()->getFrame() + spd;
 			isFirst = true;
 		}
 		else 
 		{
-			next = windowContext->getFrame() + spd - 1;
+			next = getWindowContext()->getFrame() + spd - 1;
 		}
 
 		if (next > FRAME_RATE)
 		{
-			next = next - windowContext->getFrame();
+			next = next - getWindowContext()->getFrame();
 		}
 
 		flag = true;
 	}
 
-	if (next == windowContext->getFrame())
+	if (next == getWindowContext()->getFrame())
 	{
 		nowClip++;
 		if (clipNum < nowClip)
@@ -60,23 +60,23 @@ bool FrameWork::Animation::getOnceClip(int spd, int& clip)
 	{
 		if (isFirst == false)
 		{
-			next = windowContext->getFrame() + spd;
+			next = getWindowContext()->getFrame() + spd;
 			isFirst = true;
 		}
 		else 
 		{
-			next = windowContext->getFrame() + spd - 1;
+			next = getWindowContext()->getFrame() + spd - 1;
 		}
 
 		if (next > FRAME_RATE)
 		{
-			next = next - windowContext->getFrame();
+			next = next - getWindowContext()->getFrame();
 		}
 
 		flagOnce = true;
 	}
 
-	if (next == windowContext->getFrame())
+	if (next == getWindowContext()->getFrame())
 	{
 		nowClip++;
 		if (clipNum < nowClip)

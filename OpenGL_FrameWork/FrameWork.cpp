@@ -21,23 +21,37 @@ int main()
 		window->SwapBuffers();
 		window->Wait();
 	}
+
 	return 0;
 }
 */
 
+
 namespace FrameWork
 {
+	std::shared_ptr<FrameWork::Window> windowContext;	//ウインドウコンテキスト
+
 	// ##################################### 初期化 ##################################### 
 	bool Init()
 	{
+		setlocale(LC_CTYPE, "");    //ローカルを設定
+
 		if (glfwInit() == GL_FALSE)
 		{
 			std::cerr << "glfw初期化失敗。" << std::endl;
 			return false;
 		}
 
-		atexit(glfwTerminate);	//プログラム終了時の処理を登録	
+		windowContext = std::make_shared<FrameWork::Window>(48 * 26, 48 * 18, "Dungeon");
+		atexit(glfwTerminate);	//プログラム終了時の処理を登録
+	
 		return true;
+	}
+
+	// ##################################### ウインドウコンテキストを取得 ##################################### 
+	std::shared_ptr<FrameWork::Window> getWindowContext()
+	{
+		return windowContext;
 	}
 
 	// ##################################### バージョンの指定 ##################################### 

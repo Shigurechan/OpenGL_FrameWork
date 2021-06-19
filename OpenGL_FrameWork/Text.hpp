@@ -6,6 +6,7 @@
 #include <map>
 #include "ft2build.h"
 #include FT_FREETYPE_H
+
 /*#########################################################################
 # 文字描画クラス
 
@@ -16,17 +17,20 @@ namespace FrameWork
 {
     class Window;
 
-    class Text : protected FrameWork::Transform_2D, public Shader
+    class Text : protected FrameWork::Transform_2D
     {
 
     public:
-        Text(std::shared_ptr<Window> w, const char* vert = NULL, const char* frag = NULL);  //コンストラクタ
-        ~Text();	                                                                        //デストラクタ
 
-        void Draw(glm::vec2 pos,float scale, glm::vec3 color, const char* str, ...);    //描画
+        Text(int fontSize, const char* str, ...);   //コンストラクタ
+        ~Text();                                    //デストラクタ
+
+        void Draw(glm::vec2 pos,glm::vec4 color);    //描画
+
     private:
 
-        struct Character 
+         //文字構造体
+        struct Character
         {
             unsigned int textureID;  // グリフのテクスチャID
             glm::ivec2   Size;       // グリフサイズ
@@ -34,13 +38,13 @@ namespace FrameWork
             unsigned int Advance;    // 次のグリフまでのオフセット
         };
 
-        std::map<char, Character> Characters;   //文字データ
-        std::shared_ptr<Window> windowContext;  //ウインドウコンテキスト
-        int charSize;                           //文字の大きさ(ピクセル)
+        std::vector<Character> character;   //文字データ
+        int charSize;                       //文字の大きさ(ピクセル)
 
         //FreeType
-        FT_Library ft;  //freetype
         FT_Face face;   //フェイス
+        FT_Library ft;  //freetype
+
     };
 }
 #endif
