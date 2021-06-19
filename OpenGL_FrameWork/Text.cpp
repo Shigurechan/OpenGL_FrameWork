@@ -8,15 +8,16 @@
 #include <iostream>
 
 // ##################################### コンストラクタ ##################################### 
-FrameWork::Text::Text(int fontSize,const char *str,...) : FrameWork::Transform_2D()
+FrameWork::Text::Text(const char *fontName ,int fontSize,const char *str,...) : FrameWork::Transform_2D()
 {
-    charSize = fontSize;    //文字フォンサイズを指定
-    setlocale(LC_CTYPE, "");    //ローカルを設定
+    charSize = fontSize;        //文字フォンサイズ
+    face = nullptr;             //フェイスを初期化
+    ft = nullptr;               //FreeTypeを初期化
 
     //シェーダー読み込み
     shader = std::make_unique<FrameWork::Shader>();
     shader->Load("Shader/2D/BasicText_2D.vert", "Shader/2D/BasicText_2D.frag");
- 
+
     //vao
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
@@ -38,13 +39,14 @@ FrameWork::Text::Text(int fontSize,const char *str,...) : FrameWork::Transform_2
     }
 
     //フェイス作成　フォントはメイリオ
-    if (FT_New_Face(ft, "C:\\Windows\\Fonts\\meiryo.ttc", 0, &face) != 0)
+    if (FT_New_Face(ft,fontName, 0, &face) != 0)
     {
-        std::cerr << "フォントを読み込めません。" << std::endl;
+        std::cerr << "FreeType フォントを読み込めません。"<< std::endl;
     }
 
     FT_Set_Pixel_Sizes(face,0,charSize);  //ピクセルサイズを指定
-
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // disable byte-alignment restriction
+    
     //マルチバイト文字をワイド文字変換
     wchar_t txt[1000] = { L'\0' };
     char text[1000];
@@ -52,12 +54,13 @@ FrameWork::Text::Text(int fontSize,const char *str,...) : FrameWork::Transform_2
     va_start(args, str);
     vsprintf_s(text, sizeof(text), str, args);
     va_end(args);
+
     int i, j, f;
     for (i = 0, j = 0; text[j]; i++, j += f)
     {
         f = (int)mbrtowc(txt + i, &text[j], (size_t)MB_CUR_MAX, nullptr);
     }
-
+    
     //文字をロード
     for (int i = 0; txt[i] != L'\0'; i++)
     {
@@ -89,17 +92,19 @@ FrameWork::Text::Text(int fontSize,const char *str,...) : FrameWork::Transform_2
             face->glyph->bitmap.buffer
         );
 
+        //テクスチャタイプを設定
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
 
         //テクスチャを生成      
         character.push_back(ch);
+
     }
 
-    //テクスチャタイプを設定
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
+    
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
@@ -116,9 +121,9 @@ void FrameWork::Text::Draw(glm::vec2 pos,glm::vec4 color)
     float c = 1.0f / 255.0f;
 
     //Unform
-    shader->setUniform4f("uTextColor",color);
+    shader->setUniform4f("uTextColor", color * c);    
     shader->setUniformMatrix4fv("uViewProjection", glm::ortho(0.0f, FrameWork::getWindowContext()->getSize().x, 0.0f, FrameWork::getWindowContext()->getSize().y));
-     
+
     for (std::vector<Character>::iterator itr = character.begin(); itr != character.end(); itr++) 
     {
 #define SCALE 1.0f  //文字の大きさ
@@ -140,8 +145,10 @@ void FrameWork::Text::Draw(glm::vec2 pos,glm::vec4 color)
             { xpos + w, ypos + h,   1.0f, 0.0f }
         };
 
+        glBindTexture(GL_TEXTURE_2D, itr->textureID);
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
         glDrawArrays(GL_TRIANGLES, 0, 6);
+        glBindTexture(GL_TEXTURE_2D, 0);
 
         pos.x += ((itr->Advance >> 6) * SCALE); //次のグリフに進める
 #undef SCALE

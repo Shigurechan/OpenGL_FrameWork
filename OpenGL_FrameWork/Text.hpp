@@ -22,7 +22,7 @@ namespace FrameWork
 
     public:
 
-        Text(int fontSize, const char* str, ...);   //コンストラクタ
+        Text(const char* fontName, int fontSize, const char* str, ...);   //コンストラクタ
         ~Text();                                    //デストラクタ
 
         void Draw(glm::vec2 pos,glm::vec4 color);    //描画

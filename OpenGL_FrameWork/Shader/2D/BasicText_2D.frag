@@ -5,7 +5,7 @@
 #extension GL_ARB_explicit_attrib_location: enable 
 
 // ###################### ì¸óÕ ###################### 
-layout(location = 2 ) in vec2 texCoord;
+layout(location = 1 ) in vec2 texCoord;
 
 // ###################### èoóÕ ###################### 
 out vec4 color;

@@ -13,7 +13,6 @@
 #include "Rectangle.hpp"
 #include "Camera.hpp"
 #include "Texture.hpp"
-#include "Line.hpp"
 #include "Circle.hpp"
 #include "Text.hpp"
 #include "Help.hpp"

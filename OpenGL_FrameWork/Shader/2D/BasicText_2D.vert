@@ -9,7 +9,7 @@ layout(location = 0) in vec4 vertexPosition;	//頂点座標
 
 
 // ######################　出力 ###################### 
-layout(location = 2) out vec2 texCoord;	//テキスト
+layout(location = 1) out vec2 texCoord;	//テキスト
 
 // ###################### Uniform ###################### 
 uniform mat4 uViewProjection;	//ビュープロジェクション行列

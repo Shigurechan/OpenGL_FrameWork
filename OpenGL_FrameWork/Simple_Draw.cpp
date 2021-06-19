@@ -11,41 +11,159 @@
 
 namespace FrameWork
 {
-    //矩形描画
-    void DrawRectangle(glm::vec2 pos, glm::vec2 size, glm::vec4 color)
-    {      
-        float x = 1.0f / FrameWork::getWindowContext()->getSize().x;
-        float y = 1.0f / FrameWork::getWindowContext()->getSize().y;
+    // ##################################### 矩形 描画 ##################################### 
+    void DrawRectangle(glm::vec2 start, glm::vec2 end, glm::vec4 color)
+    {
+        float x = 1.0f / (FrameWork::getWindowContext()->getSize().x / 2);
+        float y = 1.0f / (FrameWork::getWindowContext()->getSize().y / 2);
         float c = 1.0f / 255.0f;
         glColor4f(color.x * c, color.y * c, color.z * c, color.w * c);
 
-        
         glm::vec2 posA;
         glm::vec2 posB;
-        posA.x = ((pos.x * x) - 0.5f) - 0.5f;
-        posA.y = ((pos.y * y) - 0.5f);
-
-        posB.x = ((pos.x + size.x) * x - 0.5f) - 0.5f;
-        posB.y = ((pos.y + size.y)* y - 0.5f);
-
-
+        posA.x = ((start.x * x) - 1.0f);
+        posA.y = (1.0f - (start.y * y));
+        posB.x = ((end.x * x) - 1.0f);
+        posB.y = (1.0f - (end.y * y));
 
         glRectf(posA.x, posA.y, posB.x, posB.y);
+        glFinish();
+    }
 
-        glFlush();
+    // ##################################### 円 描画 ##################################### 
+    void DrawCircle(glm::vec2 start,int num,int r, glm::vec4 color)
+    {
+        float dx = 1.0f / (FrameWork::getWindowContext()->getSize().x / 2);
+        float dy = 1.0f / (FrameWork::getWindowContext()->getSize().y / 2);
+        float c = 1.0f / 255.0f;
+        glColor4f(color.x * c, color.y * c, color.z * c, color.w * c);
+
+        glBegin(GL_TRIANGLE_FAN);
+
+        glm::vec2 pos = glm::vec2(0,0);
+       
+        pos.x = (start.x * dx) - 1.0f;
+        pos.x = 1.0f - (start.y * dy);
+
+        float f =  (PI * 2) / num;
+        float ff = 0;
+        for (int i = 0; i < num; i++)
+        {
+            float x = cos(ff) * (r * dx);
+            float y = sin(ff) * (r * dy);
+
+            glVertex2f( pos.x + x, pos.y + y);
+
+            ff += f;
+        }
+
+        glEnd();
+        glFinish();
+    }
+
+    // ##################################### 点 描画 ##################################### 
+    void DrawPoint(glm::vec2 pos,GLfloat size,glm::vec4 color)
+    {
+        float dx = 1.0f / (FrameWork::getWindowContext()->getSize().x / 2);
+        float dy = 1.0f / (FrameWork::getWindowContext()->getSize().y / 2);
+        float c = 1.0f / 255.0f;
+        glColor4f(color.x * c, color.y * c, color.z * c, color.w * c);
+
+        glPointSize(size);  //サイズ
+        glBegin(GL_POINTS);
+        pos.y = 1.0f - (pos.y * dy);
+
+        glVertex2f(pos.x, pos.y);
+
+        glEnd();
+        glFinish();
+        
     }
 
 
+    // ##################################### 線 描画 ##################################### 
+    void DrawLine(glm::vec2 start,glm::vec2 end, GLfloat size, glm::vec4 color)
+    {
+        float dx = 1.0f / (FrameWork::getWindowContext()->getSize().x / 2);
+        float dy = 1.0f / (FrameWork::getWindowContext()->getSize().y / 2);
+        float c = 1.0f / 255.0f;
+        glColor4f(color.x * c, color.y * c, color.z * c, color.w * c);  //カラー
 
+        glLineWidth(size);  //サイズ
+        glBegin(GL_LINE_LOOP);
 
+        //始点
+        glm::vec2 posA;
+        posA.x = (start.x * dx) - 1.0f;
+        posA.y = 1.0f - (start.y * dy);
 
+        //終点
+        glm::vec2 posB;
+        posB.x = (end.x * dx) - 1.0f;
+        posB.y = 1.0f - (end.y * dy);
 
+        glVertex2f(posA.x, posA.y); //始点
+        glVertex2f(posB.x, posB.y); //終点
 
+        glEnd();
+        glFinish();
+
+    }
+
+    // ##################################### 三角形 描画 ##################################### 
+    void DrawTriangle(glm::vec2 pos, GLfloat size, glm::vec4 color)
+    {
+        float dx = 1.0f / (FrameWork::getWindowContext()->getSize().x / 2);
+        float dy = 1.0f / (FrameWork::getWindowContext()->getSize().y / 2);
+        float c = 1.0f / 255.0f;
+        glColor4f(color.x * c, color.y * c, color.z * c, color.w * c);  //カラー
+
+        glBegin(GL_TRIANGLES);
+
+        pos.x = (pos.x * dx) - 1.0f;
+        pos.y = 1.0f - (pos.y * dy);
+
+        glVertex2f(pos.x + 0.0f, pos.y + ((size / 2) * dy));
+        glVertex2f(pos.x + ((size / 2) * dx), pos.y - ((size / 2) * dy));
+        glVertex2f(pos.x - ((size / 2) * dx), pos.y - ((size / 2) * dy));
+        
+        glEnd();
+        glFinish();
+
+    }
+
+    // ##################################### 楕円 描画 ##################################### 
+    void DrawOval(glm::vec2 pos,int num, glm::vec2 r, glm::vec4 color)
+    {
+        float dx = 1.0f / (FrameWork::getWindowContext()->getSize().x / 2);
+        float dy = 1.0f / (FrameWork::getWindowContext()->getSize().y / 2);
+        float c = 1.0f / 255.0f;
+        glColor4f(color.x * c, color.y * c, color.z * c, color.w * c);  //カラー
+
+        pos.x = (pos.x * dx) - 1.0f;
+        pos.y = 1.0f - (pos.y * dy);
+
+        glBegin(GL_TRIANGLE_FAN);
+                
+        float f = (PI * 2) / num;
+        float ff = 0;
+        for (int i = 0; i < num; i++)
+        {
+            float x = cos(ff) * (r.x * dx);
+            float y = sin(ff) * (r.y * dy);
+
+            glVertex2f(pos.x + x, pos.y + y);
+
+            ff += f;
+        }
+        
+        glEnd();
+        glFinish();
+    }
 
     // ##################################### 簡易文字描画 ##################################### 
     void DrawFormatString(glm::vec2 pos, glm::vec4 color, FT_UInt charSize, const char* str, ...)
     {
-        setlocale(LC_CTYPE, "");    //ローカルを設定
 
         FrameWork::Shader shader;
 
@@ -88,7 +206,7 @@ namespace FrameWork
         }
 
         //フェイス作成　フォントはメイリオ
-        if (FT_New_Face(ft, "C:\\Windows\\Fonts\\meiryo.ttc", 0, &face) != 0)
+        if (FT_New_Face(ft, "Font\\SourceHanCodeJP.ttc", 0, &face) != 0)
         {
             std::cerr << "ERROR: FREETYPE: Failed to load font" << std::endl;
         }

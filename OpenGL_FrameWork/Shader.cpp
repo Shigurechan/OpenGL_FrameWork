@@ -15,18 +15,11 @@ FrameWork::Shader::Shader()
 // ##################################### シェーダーをロード ##################################### 
 bool FrameWork::Shader::Load(const char* vert, const char* frag)
 {
-	if (program != 0)
-	{
-		glDeleteShader(program);
-	}
-
 	program = loadProgram(vert, frag);
-
+		
 	if (program == 0)
 	{
 		std::cerr << "シェーダープログラム作成エラー" << std::endl;
-		assert(program);
-		//exit(1);
 		return false;
 	}
 
@@ -36,15 +29,15 @@ bool FrameWork::Shader::Load(const char* vert, const char* frag)
 // ##################################### プログラムオブジェクトをロード ##################################### 
 GLuint FrameWork::Shader::loadProgram(const char* vert, const char* frag)
 {
-	std::vector<GLchar> vsrc;
-	const bool vstat = ReadShaderSource(vert, vsrc);
+	std::vector<GLchar> vertSource;
+	const bool v = ReadShaderSource(vert, vertSource);
 	
-	std::vector<GLchar> fsrc;
-	const bool fstat = ReadShaderSource(frag, fsrc);
+	std::vector<GLchar> fragSource;
+	const bool f = ReadShaderSource(frag, fragSource);
 	
-	if (vstat && fstat)
+	if (v == true && f == true)
 	{
-		return CreateProgram(vsrc.data(), fsrc.data());		
+		return CreateProgram(vertSource.data(), fragSource.data());		
 	}
 	else 
 	{
@@ -57,14 +50,15 @@ bool FrameWork::Shader::ReadShaderSource(const char* name, std::vector<GLchar>& 
 {
 	if (name == NULL)
 	{
-		assert(0 && "シェーダーファイルが指定されていません。");
+		std::cerr << "シェーダーファイルが指定されていません。" << std::endl;
+		assert(0);
 		return false;
 	}
 	
 	std::ifstream file(name, std::ios::binary);
 	if (file.fail() == true)
 	{
-		std::cerr << "ソースファイルが読み込めません: " << name << std::endl;
+		std::cerr << "シェーダーファイルを読み込めません: " << name << std::endl;
 		file.close();
 		return false;
 	}
@@ -95,20 +89,22 @@ GLboolean FrameWork::Shader::CompileInfoLog(GLuint shader,const char* str)
 	if (status == GL_FALSE)
 	{
 		std::cerr << str << std::endl;
+
+		//エラーログの長さを得る
+		GLsizei bufSize;
+		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &bufSize);
+
+		if (bufSize > 1)
+		{
+			std::vector<GLchar> infoLog(bufSize);
+			GLsizei length;
+			glGetShaderInfoLog(shader, bufSize, &length, &infoLog[0]);
+
+			std::cerr << &infoLog[0];
+		}
 	}
 	
-	//エラーログの長さを得る
-	GLsizei bufSize;
-	glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &bufSize);
-
-	if (bufSize > 1)
-	{
-		std::vector<GLchar> infoLog(bufSize);
-		GLsizei length;
-		glGetShaderInfoLog(shader, bufSize, &length, &infoLog[0]);
-
-		std::cerr<< &infoLog[0] << std::endl;
-	}
+	
 
 	return (GLboolean)status;
 }
@@ -123,7 +119,7 @@ GLuint FrameWork::Shader::CreateProgram(const char* vsrc, const char* fsrc)
 		const GLuint vobj = glCreateShader(GL_VERTEX_SHADER);
 		glShaderSource(vobj, 1, &vsrc, NULL);
 		glCompileShader(vobj);
-		CompileInfoLog(vobj, vsrc);
+		CompileInfoLog(vobj, "Complie Error: Vertex Shader");
 		glAttachShader(program, vobj);
 		glDeleteShader(vobj);
 	}
@@ -137,7 +133,7 @@ GLuint FrameWork::Shader::CreateProgram(const char* vsrc, const char* fsrc)
 		const GLuint fobj = glCreateShader(GL_FRAGMENT_SHADER);
 		glShaderSource(fobj, 1, &fsrc, NULL);
 		glCompileShader(fobj);
-		CompileInfoLog(fobj, fsrc);
+		CompileInfoLog(fobj, "Complie Error: Fragment Shader");
 		glAttachShader(program, fobj);
 		glDeleteShader(fobj);
 	}
@@ -164,7 +160,6 @@ GLboolean FrameWork::Shader::ProgramInfoLog(GLuint program)
 		GLsizei length;
 		glGetProgramInfoLog(program, bufSize, &length, &infoLog[0]);
 		std::cerr<<"Program Info Log: "<< infoLog.data() <<std::endl;
-
 		return false;
 	}
 	else
@@ -225,7 +220,7 @@ void FrameWork::Shader::setDisable()
 
 // ##################################### Uniform 設定 ##################################### 
   
-//vec1
+// ##################################### vec1 ##################################### 
 void FrameWork::Shader::setUniform1f(const char* name, const float vec)
 {
 	const GLuint object = glGetUniformLocation(program, name);
@@ -233,7 +228,7 @@ void FrameWork::Shader::setUniform1f(const char* name, const float vec)
 	glUniform1f(object,vec);
 }
 
-//vec2
+// ##################################### vec2 ##################################### 
 void FrameWork::Shader::setUniform2f(const char* name, const glm::vec2 vec)
 {
 	const GLuint object = glGetUniformLocation(program, name);
@@ -241,7 +236,7 @@ void FrameWork::Shader::setUniform2f(const char* name, const glm::vec2 vec)
 	glUniform2f(object,vec.x,vec.y);
 }
 
-//vec3
+// ##################################### vec3 ##################################### 
 void FrameWork::Shader::setUniform3f(const char* name, const glm::vec3 vec)
 {
 	const GLuint object = glGetUniformLocation(program, name);
@@ -249,7 +244,7 @@ void FrameWork::Shader::setUniform3f(const char* name, const glm::vec3 vec)
 	glUniform3f(object,vec.x, vec.y,vec.z);
 }
 
-//vec4
+// ##################################### vec4 ##################################### 
 void FrameWork::Shader::setUniform4f(const char* name, const glm::vec4 vec)
 {	
 	const GLuint object = glGetUniformLocation(program,name);
@@ -257,7 +252,7 @@ void FrameWork::Shader::setUniform4f(const char* name, const glm::vec4 vec)
 	glUniform4f(object, vec.x, vec.y, vec.z, vec.w);	
 }
 
-//行列2
+// ##################################### mat2 ##################################### 
 void FrameWork::Shader::setUniformMatrix2fv(const char* name, const glm::mat2 m)
 {
 	const GLuint object = glGetUniformLocation(program, name);
@@ -265,7 +260,7 @@ void FrameWork::Shader::setUniformMatrix2fv(const char* name, const glm::mat2 m)
 	glUniformMatrix2fv(object,1,false,glm::value_ptr(m));
 }
 
-//行列３
+// ##################################### mat3 ##################################### 
 void FrameWork::Shader::setUniformMatrix3fv(const char* name, const glm::mat3 m)
 {
 	const GLuint object = glGetUniformLocation(program, name);
@@ -273,7 +268,7 @@ void FrameWork::Shader::setUniformMatrix3fv(const char* name, const glm::mat3 m)
 	glUniformMatrix3fv(object, 1, false, glm::value_ptr(m));
 }
 
-//行列4
+// ##################################### mat4 ##################################### 
 void FrameWork::Shader::setUniformMatrix4fv(const char* name, const glm::mat4 m)
 {
 	const GLuint object = glGetUniformLocation(program, name);
