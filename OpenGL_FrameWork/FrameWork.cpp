@@ -32,7 +32,7 @@ namespace FrameWork
 	std::shared_ptr<FrameWork::Window> windowContext;	//ウインドウコンテキスト
 
 	// ##################################### 初期化 ##################################### 
-	bool Init()
+	bool Init(glm::ivec2 size, const char* title)
 	{
 		setlocale(LC_CTYPE, "");    //ローカルを設定
 
@@ -42,7 +42,7 @@ namespace FrameWork
 			return false;
 		}
 
-		windowContext = std::make_shared<FrameWork::Window>(48 * 26, 48 * 18, "Dungeon");
+		windowContext = std::make_shared<FrameWork::Window>(size.x,size.y, title);
 		atexit(glfwTerminate);	//プログラム終了時の処理を登録
 	
 		return true;

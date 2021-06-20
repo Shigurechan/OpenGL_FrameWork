@@ -20,11 +20,9 @@
 
 #define PI ((float)3.14159265359f) //PI
 
-
-
 namespace FrameWork
 {
-	bool Init();					//初期化
+	bool Init(glm::ivec2 size,const char* title);	//初期化
 	void setVersion(int a,int b);	//バージョンを設定
 	std::shared_ptr<FrameWork::Window> getWindowContext();	//ウインドウコンテキストを取得
 }
